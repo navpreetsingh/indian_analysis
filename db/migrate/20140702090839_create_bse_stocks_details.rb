@@ -10,8 +10,13 @@ class CreateBseStocksDetails < ActiveRecord::Migration
       t.integer :volume
       t.integer :no_of_trades
       t.integer :total_turnover
-
-      t.timestamps
+      t.integer :bs_signal
+      t.float :oh_diff
+      t.float :ol_diff
+      t.float :oc_diff
+      t.float :ch_diff
+      t.float :cl_diff
+      t.float :cc_diff
     end
   end
 end
