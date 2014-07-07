@@ -2,9 +2,10 @@ class BseStocksDetail < ActiveRecord::Base
 	belongs_to :bse_stock
 
 	def self.bs
-		ids = BseStock.all.collect(&:id)
+		#ids = BseStock.all.collect(&:id)
+		ids = BseStock.where(:vol_category => 4).collect(&:id)			
 		ids.each do |stock|
-			data = BseStocksDetail.where("bse_stock_id = ?", stock).order("date DESC").limit(100)
+			data = BseStocksDetail.where("bse_stock_id = ?", stock).order("date DESC").limit(200)
 			for i in 0..data.count - 2
 				dt = data[i]
 				dy = data[i+1]

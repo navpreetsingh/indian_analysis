@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140707070820) do
+ActiveRecord::Schema.define(version: 20140707071854) do
 
   create_table "BSE_high_volume_stocks", force: true do |t|
     t.integer "BSE_stock_id", null: false
@@ -144,6 +144,36 @@ ActiveRecord::Schema.define(version: 20140707070820) do
 
   create_table "bse4_trends", force: true do |t|
     t.integer  "bse_stock_id"
+    t.integer  "d30_t"
+    t.integer  "d_30_hi"
+    t.integer  "d_30_li"
+    t.integer  "d_30_chi"
+    t.integer  "d_30_cli"
+    t.integer  "d15_t"
+    t.integer  "d_15_hi"
+    t.integer  "d_15_li"
+    t.integer  "d_15_chi"
+    t.integer  "d_15_cli"
+    t.integer  "d7_t"
+    t.integer  "d_7_hi"
+    t.integer  "d_7_li"
+    t.integer  "d_7_chi"
+    t.integer  "d_7_cli"
+    t.integer  "d3_t"
+    t.integer  "d_3_hi"
+    t.integer  "d_3_li"
+    t.integer  "d_3_chi"
+    t.integer  "d_3_cli"
+    t.float    "avg_high"
+    t.float    "avg_low"
+    t.float    "avg_close"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "bse4p_trends", force: true do |t|
+    t.integer  "bse_stock_id"
+    t.date     "date"
     t.integer  "d30_t"
     t.integer  "d_30_hi"
     t.integer  "d_30_li"
