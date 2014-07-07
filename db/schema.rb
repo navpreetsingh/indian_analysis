@@ -13,48 +13,6 @@
 
 ActiveRecord::Schema.define(version: 20140707071854) do
 
-  create_table "BSE_high_volume_stocks", force: true do |t|
-    t.integer "BSE_stock_id", null: false
-  end
-
-  create_table "BSE_stocks", force: true do |t|
-    t.string  "stock_name",      null: false
-    t.string  "stock_full_name", null: false
-    t.integer "vol_category",    null: false
-  end
-
-  create_table "BSE_stocks_details", force: true do |t|
-    t.integer "BSE_stock_id",   null: false
-    t.date    "date",           null: false
-    t.float   "open",           null: false
-    t.float   "high",           null: false
-    t.float   "low",            null: false
-    t.float   "close",          null: false
-    t.integer "volume",         null: false
-    t.integer "no_of_trades",   null: false
-    t.integer "total_turnover", null: false
-  end
-
-  create_table "NSE_high_volume_stocks", force: true do |t|
-    t.integer "NSE_stock_id", null: false
-  end
-
-  create_table "NSE_stocks", force: true do |t|
-    t.string  "stock_name",   null: false
-    t.integer "vol_category", null: false
-  end
-
-  create_table "NSE_stocks_details", force: true do |t|
-    t.integer "NSE_stock_id", null: false
-    t.date    "date",         null: false
-    t.float   "open",         null: false
-    t.float   "high",         null: false
-    t.float   "low",          null: false
-    t.float   "close",        null: false
-    t.integer "volume",       null: false
-    t.float   "turnover",     null: false
-  end
-
   create_table "bse1_trends", force: true do |t|
     t.integer  "bse_stock_id"
     t.integer  "d30_t"
@@ -205,6 +163,7 @@ ActiveRecord::Schema.define(version: 20140707071854) do
     t.string  "stock_name"
     t.string  "stock_full_name"
     t.integer "vol_category"
+    t.integer "price_category",  null: false
   end
 
   create_table "bse_stocks_details", force: true do |t|
@@ -217,6 +176,13 @@ ActiveRecord::Schema.define(version: 20140707071854) do
     t.integer "volume"
     t.integer "no_of_trades"
     t.integer "total_turnover"
+    t.integer "bs_signal",      null: false
+    t.float   "oh_diff",        null: false
+    t.float   "ol_diff",        null: false
+    t.float   "oc_diff",        null: false
+    t.float   "ch_diff",        null: false
+    t.float   "cl_diff",        null: false
+    t.float   "cc_diff",        null: false
   end
 
   create_table "nse1_trends", force: true do |t|
@@ -349,6 +315,13 @@ ActiveRecord::Schema.define(version: 20140707071854) do
     t.float   "close"
     t.integer "volume"
     t.float   "turnover"
+    t.integer "bs_signal",    null: false
+    t.float   "oh_diff",      null: false
+    t.float   "ol_diff",      null: false
+    t.float   "oc_diff",      null: false
+    t.float   "ch_diff",      null: false
+    t.float   "cl_diff",      null: false
+    t.float   "cc_diff",      null: false
   end
 
 end
