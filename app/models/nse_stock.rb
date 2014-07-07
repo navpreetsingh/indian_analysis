@@ -1,5 +1,9 @@
 class NseStock < ActiveRecord::Base
 	has_many :nse_stocks_details, dependent: :destroy
+	has_one :nse4_trends, dependent: :destroy
+	has_one :nse3_trends, dependent: :destroy
+	has_one :nse2_trends, dependent: :destroy
+	has_one :nse1_trends, dependent: :destroy
 
 	def self.vol_category
 		ids = NseStock.all

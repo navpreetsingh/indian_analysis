@@ -1,16 +1,16 @@
-class Bse2Trend < ActiveRecord::Base
-belongs_to :bse_stock
+class Nse1Trend < ActiveRecord::Base
+	belongs_to :nse_stock
 
-	def self.trend2
+	def self.trend1
 		# Run below 2 commands before calling this function
 		# rake db:migrate:down VERSION=20140705140950
 		# rake db:migrate:down VERSION=20140705140950
 		
-		Bse2Trend.destroy_all
-		ids = BseStock.where(:vol_category => 2).collect(&:id)
+		Nse1Trend.destroy_all
+		ids = NseStock.where(:vol_category => 1).collect(&:id)
 		ids.each do |stock|
 		#stock = ids[0]
-			data = BseStocksDetail.where("bse_stock_id = ?", stock).order("date DESC").limit(30)
+			data = NseStocksDetail.where("nse_stock_id = ?", stock).order("date DESC").limit(30)
 			data_t = data.collect(&:bs_signal)
 			data_h = data.collect(&:high)
 			data_l = data.collect(&:low)
@@ -36,7 +36,7 @@ belongs_to :bse_stock
 			avg_l = data.collect(&:cl_diff)[0..30/(2**3) - 1].sum / 3
 			avg_c = data.collect(&:cc_diff)[0..30/(2**3) - 1].sum / 3
 
-			Bse2Trend.create(:bse_stock_id => stock, :d30_t => data_ti[0], :d_30_hi => data_hi[0],
+			Nse1Trend.create(:nse_stock_id => stock, :d30_t => data_ti[0], :d_30_hi => data_hi[0],
 				:d_30_li => data_li[0], :d_30_chi => data_chi[0], :d_30_cli	=> data_cli[0], 
 				:d15_t => data_ti[1], :d_15_hi => data_hi[1], :d_15_li => data_li[1], 
 				:d_15_chi => data_chi[1], :d_15_cli	=> data_cli[1],

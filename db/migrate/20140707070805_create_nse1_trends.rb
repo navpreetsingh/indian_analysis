@@ -1,7 +1,8 @@
-class CreateBse1Trends < ActiveRecord::Migration
+class CreateNse1Trends < ActiveRecord::Migration
   def self.up
-    create_table :bse1_trends do |t|
-      t.integer :bse_stock_id      
+    create_table :nse1_trends do |t|
+      t.integer :nse_stock_id
+      
       t.integer :d30_t			#30 days trend
       t.integer :d_30_hi		#last highest occured in 30 days
       t.integer :d_30_li		#last lowest occured in 30 days
@@ -34,6 +35,6 @@ class CreateBse1Trends < ActiveRecord::Migration
   end
 
   def self.down
-  	drop_table :bse1_trends
+  	drop_table :nse1_trends
   end	
 end

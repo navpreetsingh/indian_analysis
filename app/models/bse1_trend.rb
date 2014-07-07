@@ -8,8 +8,8 @@ belongs_to :bse_stock
 		
 		Bse1Trend.destroy_all
 		ids = BseStock.where(:vol_category => 1).collect(&:id)
-		#ids.each do |stock|
-		stock = ids[0]
+		ids.each do |stock|
+		#stock = ids[0]
 			data = BseStocksDetail.where("bse_stock_id = ?", stock).order("date DESC").limit(30)
 			data_t = data.collect(&:bs_signal)
 			data_h = data.collect(&:high)
@@ -45,6 +45,6 @@ belongs_to :bse_stock
 				:d3_t => data_ti[3], :d_3_hi => data_hi[3], :d_3_li => data_li[3], 
 				:d_3_chi => data_chi[3], :d_3_cli	=> data_cli[3], 
 				:avg_high => avg_h, :avg_low => avg_l, :avg_close => avg_c )
-		#end					
+		end					
 	end
 end
