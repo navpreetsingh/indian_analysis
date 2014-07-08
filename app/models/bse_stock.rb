@@ -4,6 +4,8 @@ class BseStock < ActiveRecord::Base
 	has_one :bse3_trends, dependent: :destroy
 	has_one :bse2_trends, dependent: :destroy
 	has_one :bse1_trends, dependent: :destroy
+	has_many :bse4_bs_strategies, dependent: :destroy
+	has_many :bse4p_trends, dependent: :destroy
 
 	def self.vol_category
 		ids = BseStock.all

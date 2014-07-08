@@ -1,5 +1,6 @@
 class BseStocksDetail < ActiveRecord::Base
 	belongs_to :bse_stock
+	has_and_belongs_to_many :bse4p_trends
 
 	def self.bs
 		#ids = BseStock.all.collect(&:id)

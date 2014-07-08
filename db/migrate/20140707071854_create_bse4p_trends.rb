@@ -2,6 +2,7 @@ class CreateBse4pTrends < ActiveRecord::Migration
   def self.up
     create_table :bse4p_trends do |t|
       t.integer :bse_stock_id
+      t.string :stock_name
       t.date :date
       t.integer :d30_t			#30 days trend
       t.integer :d_30_hi		#last highest occured in 30 days
@@ -27,6 +28,9 @@ class CreateBse4pTrends < ActiveRecord::Migration
       t.integer :d_3_chi		#last close highest occured in 30 days
       t.integer :d_3_cli		#last close lowest occured in 30 days
 
+      t.integer :bs_signal
+      t.float :last_close
+      
       t.float :avg_high
       t.float :avg_low
       t.float :avg_close

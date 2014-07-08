@@ -1,5 +1,6 @@
 class Bse4pTrend < ActiveRecord::Base
-belongs_to :bse_stock
+	belongs_to :bse_stock
+	has_and_belongs_to_many :bse_stocks_details
 
 	def self.trend4
 		# Run below 2 commands before calling this function
@@ -7,14 +8,17 @@ belongs_to :bse_stock
 		# rake db:migrate:down VERSION=20140705140950
 		
 		Bse4pTrend.destroy_all
-		ids = BseStock.where(:vol_category => 4).collect(&:id)
+		ids = BseStock.where(:vol_category => 4)
 		ids.each do |stock|
 		#stock = ids[0]
-			data = BseStocksDetail.where("bse_stock_id = ?", stock).order("date DESC").limit(200)
+			t = Time.now
+			data = BseStocksDetail.where("bse_stock_id = ?", stock.id).order("date DESC").limit(200)
 			zz = 0
 
 			for cc in zz..data.count - 31
 				date = data[cc].date
+				bs_signal = data[cc].bs_signal
+				last_close = data[cc].close
 				data_t = data.collect(&:bs_signal)[cc..cc+29]
 				data_h = data.collect(&:high)[cc..cc+29]
 				data_l = data.collect(&:low)[cc..cc+29]
@@ -44,7 +48,8 @@ belongs_to :bse_stock
 				avg_l = avg_ll[0..30/(2**3) - 1].sum / 3
 				avg_c = avg_cc[0..30/(2**3) - 1].sum / 3
 
-				Bse4pTrend.create(:bse_stock_id => stock, :date => date,
+				Bse4pTrend.create(:bse_stock_id => stock.id, :stock_name => stock.stock_name,
+					 :date => date,
 					:d30_t => data_ti[0], :d_30_hi => data_hi[0], :d_30_li => data_li[0], 
 					:d_30_chi => data_chi[0], :d_30_cli	=> data_cli[0], 
 					:d15_t => data_ti[1], :d_15_hi => data_hi[1], :d_15_li => data_li[1], 
@@ -53,10 +58,12 @@ belongs_to :bse_stock
 					:d_7_chi => data_chi[2], :d_7_cli	=> data_cli[2],
 					:d3_t => data_ti[3], :d_3_hi => data_hi[3], :d_3_li => data_li[3], 
 					:d_3_chi => data_chi[3], :d_3_cli	=> data_cli[3], 
+					:bs_signal => bs_signal, :last_close => last_close,
 					:avg_high => avg_h, :avg_low => avg_l, :avg_close => avg_c )
 
 				zz += 1
 			end	
+			puts Time.now - t
 		end				
-	end
+	end	
 end

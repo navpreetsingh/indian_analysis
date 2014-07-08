@@ -11,7 +11,50 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140707071854) do
+ActiveRecord::Schema.define(version: 20140708065610) do
+
+  create_table "BSE_high_volume_stocks", force: true do |t|
+    t.integer "BSE_stock_id", null: false
+  end
+
+  create_table "BSE_stocks", force: true do |t|
+    t.string  "stock_name",      null: false
+    t.string  "stock_full_name", null: false
+    t.integer "vol_category",    null: false
+    t.integer "lp",              null: false
+  end
+
+  create_table "BSE_stocks_details", force: true do |t|
+    t.integer "BSE_stock_id",   null: false
+    t.date    "date",           null: false
+    t.float   "open",           null: false
+    t.float   "high",           null: false
+    t.float   "low",            null: false
+    t.float   "close",          null: false
+    t.integer "volume",         null: false
+    t.integer "no_of_trades",   null: false
+    t.integer "total_turnover", null: false
+  end
+
+  create_table "NSE_high_volume_stocks", force: true do |t|
+    t.integer "NSE_stock_id", null: false
+  end
+
+  create_table "NSE_stocks", force: true do |t|
+    t.string  "stock_name",   null: false
+    t.integer "vol_category", null: false
+  end
+
+  create_table "NSE_stocks_details", force: true do |t|
+    t.integer "NSE_stock_id", null: false
+    t.date    "date",         null: false
+    t.float   "open",         null: false
+    t.float   "high",         null: false
+    t.float   "low",          null: false
+    t.float   "close",        null: false
+    t.integer "volume",       null: false
+    t.float   "turnover",     null: false
+  end
 
   create_table "bse1_trends", force: true do |t|
     t.integer  "bse_stock_id"
@@ -100,6 +143,27 @@ ActiveRecord::Schema.define(version: 20140707071854) do
     t.datetime "updated_at"
   end
 
+  create_table "bse4_bs_strategies", force: true do |t|
+    t.string   "stock_name",    null: false
+    t.integer  "bse_stock_id"
+    t.date     "date"
+    t.date     "executed_date"
+    t.float    "last_close"
+    t.integer  "bs_signal"
+    t.float    "open"
+    t.float    "target_1"
+    t.float    "stop_loss_1"
+    t.float    "target_2"
+    t.float    "stop_loss_2"
+    t.float    "target_3"
+    t.float    "stop_loss_3"
+    t.float    "profit_loss"
+    t.integer  "rank"
+    t.integer  "strategy"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "bse4_trends", force: true do |t|
     t.integer  "bse_stock_id"
     t.integer  "d30_t"
@@ -176,13 +240,13 @@ ActiveRecord::Schema.define(version: 20140707071854) do
     t.integer "volume"
     t.integer "no_of_trades"
     t.integer "total_turnover"
-    t.integer "bs_signal",      null: false
-    t.float   "oh_diff",        null: false
-    t.float   "ol_diff",        null: false
-    t.float   "oc_diff",        null: false
-    t.float   "ch_diff",        null: false
-    t.float   "cl_diff",        null: false
-    t.float   "cc_diff",        null: false
+    t.integer "bs_signal"
+    t.float   "oh_diff"
+    t.float   "ol_diff"
+    t.float   "oc_diff"
+    t.float   "ch_diff"
+    t.float   "cl_diff"
+    t.float   "cc_diff"
   end
 
   create_table "nse1_trends", force: true do |t|
@@ -315,13 +379,6 @@ ActiveRecord::Schema.define(version: 20140707071854) do
     t.float   "close"
     t.integer "volume"
     t.float   "turnover"
-    t.integer "bs_signal",    null: false
-    t.float   "oh_diff",      null: false
-    t.float   "ol_diff",      null: false
-    t.float   "oc_diff",      null: false
-    t.float   "ch_diff",      null: false
-    t.float   "cl_diff",      null: false
-    t.float   "cc_diff",      null: false
   end
 
 end
