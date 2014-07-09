@@ -8,15 +8,27 @@ class NseStock < ActiveRecord::Base
 	def self.vol_category
 		ids = NseStock.all
 		ids.each do |stock|
-			average = NseStocksDetail.where("nse_stock_id = ?", stock.id).order("date DESC").limit(30).collect(&:volume).sum / 30
-			if average > 5000 and average < 10001
+			data = NseStocksDetail.where("nse_stock_id = ?", stock.id).order("date DESC").limit(30).collect(&:volume).sum / 30
+			avg_vol = data.collect(&:volume).sum / 200
+			if avg_vol > 5000 and avg_vol < 10001
 				stock.update_attributes(:vol_category => 1)	
-			elsif average > 10000 and average < 25001
+			elsif avg_vol > 10000 and avg_vol < 25001
 				stock.update_attributes(:vol_category => 2)
-			elsif average > 25000 and average < 100001
+			elsif avg_vol > 25000 and avg_vol < 100001
 				stock.update_attributes(:vol_category => 3)
-			elsif average > 100000
+			elsif avg_vol > 100000
 				stock.update_attributes(:vol_category => 4)
+			end
+			
+			avg_price = data.collect(&:close).sum / 200
+			if avg_price > 30 and avg_price < 101
+				stock.update_attributes(:price_category => 1)	
+			elsif avg_price > 100 and avg_price < 401
+				stock.update_attributes(:price_category => 2)
+			elsif avg_price > 400 and avg_price < 1001
+				stock.update_attributes(:price_category => 3)
+			elsif avg_price > 1000
+				stock.update_attributes(:price_category => 4)
 			end
 		end
 	end

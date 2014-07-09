@@ -1,7 +1,7 @@
 class NseStocksDetail < ActiveRecord::Base
 	belongs_to :nse_stock
 
-	def self.bs
+	def self.spread
 		ids = NseStock.all
 		ids.each do |stock|
 			data = NseStocksDetail.where("nse_stock_id = ?", stock.id).order("date DESC").limit(100)

@@ -195,6 +195,7 @@ ActiveRecord::Schema.define(version: 20140708065610) do
 
   create_table "bse4p_trends", force: true do |t|
     t.integer  "bse_stock_id"
+    t.string   "stock_name",   null: false
     t.date     "date"
     t.integer  "d30_t"
     t.integer  "d_30_hi"
@@ -216,6 +217,8 @@ ActiveRecord::Schema.define(version: 20140708065610) do
     t.integer  "d_3_li"
     t.integer  "d_3_chi"
     t.integer  "d_3_cli"
+    t.integer  "bs_signal",    null: false
+    t.float    "last_close",   null: false
     t.float    "avg_high"
     t.float    "avg_low"
     t.float    "avg_close"

@@ -2,7 +2,7 @@ class BseStocksDetail < ActiveRecord::Base
 	belongs_to :bse_stock
 	has_and_belongs_to_many :bse4p_trends
 
-	def self.bs
+	def self.spread
 		#ids = BseStock.all.collect(&:id)
 		ids = BseStock.where(:vol_category => 4).collect(&:id)			
 		ids.each do |stock|

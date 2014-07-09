@@ -2,9 +2,13 @@ class Bse4BsStrategy < ActiveRecord::Base
 	belongs_to :bse_stock
 
 	def self.strategy1
-		dates = dates = Bse4pTrend.uniq.pluck(:date).sort
-		for i in 0..dates.count - 2
-			
+		dates = Bse4pTrend.where("bse_stock_id = 5").collect(&:date).sort
+		#For best buyers
+		dates.each do |date|
+			data = Bse4pTrend.where("date = ? AND d3_t = 3", date).order("avg_high desc").limit(10)
+			for st in 1..10
+				
+			end
 		end
 	end
 
