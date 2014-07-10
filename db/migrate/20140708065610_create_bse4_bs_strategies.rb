@@ -8,6 +8,9 @@ class CreateBse4BsStrategies < ActiveRecord::Migration
     	t.float :last_close
     	t.integer :bs_signal
     	t.float :open
+        t.float :high
+        t.float :low
+        t.float :close
     	t.float :target_1
     	t.float :stop_loss_1
     	t.float :target_2

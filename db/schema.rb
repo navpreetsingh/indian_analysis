@@ -151,6 +151,9 @@ ActiveRecord::Schema.define(version: 20140708065610) do
     t.float    "last_close"
     t.integer  "bs_signal"
     t.float    "open"
+    t.float    "high",          null: false
+    t.float    "low",           null: false
+    t.float    "close",         null: false
     t.float    "target_1"
     t.float    "stop_loss_1"
     t.float    "target_2"
