@@ -9,8 +9,8 @@ class Bse4pTrend < ActiveRecord::Base
 		
 		Bse4pTrend.destroy_all
 		ids = BseStock.where(:vol_category => 4)
-		ids.each do |stock|
-		#stock = ids[0]
+		#ids.each do |stock|
+		stock = ids[0]
 			t = Time.now
 			data = BseStocksDetail.where("bse_stock_id = ?", stock.id).order("date DESC").limit(200)
 			zz = 0
@@ -64,6 +64,6 @@ class Bse4pTrend < ActiveRecord::Base
 				zz += 1
 			end	
 			puts Time.now - t
-		end				
+		#end				
 	end	
 end

@@ -32,6 +32,7 @@ class Bse4Trend < ActiveRecord::Base
 			end
 
 			#taking averages
+			avg_o = data.collect(&:lco_diff)[0..30/(2**3) - 1].sum / 3
 			avg_h = data.collect(&:ch_diff)[0..30/(2**3) - 1].sum / 3
 			avg_l = data.collect(&:cl_diff)[0..30/(2**3) - 1].sum / 3
 			avg_c = data.collect(&:cc_diff)[0..30/(2**3) - 1].sum / 3

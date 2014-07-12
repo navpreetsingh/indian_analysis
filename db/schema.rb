@@ -13,51 +13,10 @@
 
 ActiveRecord::Schema.define(version: 20140708065610) do
 
-  create_table "BSE_high_volume_stocks", force: true do |t|
-    t.integer "BSE_stock_id", null: false
-  end
-
-  create_table "BSE_stocks", force: true do |t|
-    t.string  "stock_name",      null: false
-    t.string  "stock_full_name", null: false
-    t.integer "vol_category",    null: false
-    t.integer "lp",              null: false
-  end
-
-  create_table "BSE_stocks_details", force: true do |t|
-    t.integer "BSE_stock_id",   null: false
-    t.date    "date",           null: false
-    t.float   "open",           null: false
-    t.float   "high",           null: false
-    t.float   "low",            null: false
-    t.float   "close",          null: false
-    t.integer "volume",         null: false
-    t.integer "no_of_trades",   null: false
-    t.integer "total_turnover", null: false
-  end
-
-  create_table "NSE_high_volume_stocks", force: true do |t|
-    t.integer "NSE_stock_id", null: false
-  end
-
-  create_table "NSE_stocks", force: true do |t|
-    t.string  "stock_name",   null: false
-    t.integer "vol_category", null: false
-  end
-
-  create_table "NSE_stocks_details", force: true do |t|
-    t.integer "NSE_stock_id", null: false
-    t.date    "date",         null: false
-    t.float   "open",         null: false
-    t.float   "high",         null: false
-    t.float   "low",          null: false
-    t.float   "close",        null: false
-    t.integer "volume",       null: false
-    t.float   "turnover",     null: false
-  end
-
   create_table "bse1_trends", force: true do |t|
     t.integer  "bse_stock_id"
+    t.string   "stock_name"
+    t.date     "date"
     t.integer  "d30_t"
     t.integer  "d_30_hi"
     t.integer  "d_30_li"
@@ -78,6 +37,9 @@ ActiveRecord::Schema.define(version: 20140708065610) do
     t.integer  "d_3_li"
     t.integer  "d_3_chi"
     t.integer  "d_3_cli"
+    t.integer  "bs_signal"
+    t.float    "last_close"
+    t.float    "avg_open"
     t.float    "avg_high"
     t.float    "avg_low"
     t.float    "avg_close"
@@ -87,6 +49,8 @@ ActiveRecord::Schema.define(version: 20140708065610) do
 
   create_table "bse2_trends", force: true do |t|
     t.integer  "bse_stock_id"
+    t.string   "stock_name"
+    t.date     "date"
     t.integer  "d30_t"
     t.integer  "d_30_hi"
     t.integer  "d_30_li"
@@ -107,6 +71,9 @@ ActiveRecord::Schema.define(version: 20140708065610) do
     t.integer  "d_3_li"
     t.integer  "d_3_chi"
     t.integer  "d_3_cli"
+    t.integer  "bs_signal"
+    t.float    "last_close"
+    t.float    "avg_open"
     t.float    "avg_high"
     t.float    "avg_low"
     t.float    "avg_close"
@@ -116,6 +83,8 @@ ActiveRecord::Schema.define(version: 20140708065610) do
 
   create_table "bse3_trends", force: true do |t|
     t.integer  "bse_stock_id"
+    t.string   "stock_name"
+    t.date     "date"
     t.integer  "d30_t"
     t.integer  "d_30_hi"
     t.integer  "d_30_li"
@@ -136,6 +105,9 @@ ActiveRecord::Schema.define(version: 20140708065610) do
     t.integer  "d_3_li"
     t.integer  "d_3_chi"
     t.integer  "d_3_cli"
+    t.integer  "bs_signal"
+    t.float    "last_close"
+    t.float    "avg_open"
     t.float    "avg_high"
     t.float    "avg_low"
     t.float    "avg_close"
@@ -144,16 +116,16 @@ ActiveRecord::Schema.define(version: 20140708065610) do
   end
 
   create_table "bse4_bs_strategies", force: true do |t|
-    t.string   "stock_name",    null: false
+    t.string   "stock_name"
     t.integer  "bse_stock_id"
     t.date     "date"
     t.date     "executed_date"
     t.float    "last_close"
     t.integer  "bs_signal"
     t.float    "open"
-    t.float    "high",          null: false
-    t.float    "low",           null: false
-    t.float    "close",         null: false
+    t.float    "high"
+    t.float    "low"
+    t.float    "close"
     t.float    "target_1"
     t.float    "stop_loss_1"
     t.float    "target_2"
@@ -169,37 +141,8 @@ ActiveRecord::Schema.define(version: 20140708065610) do
 
   create_table "bse4_trends", force: true do |t|
     t.integer  "bse_stock_id"
-    t.integer  "d30_t"
-    t.integer  "d_30_hi"
-    t.integer  "d_30_li"
-    t.integer  "d_30_chi"
-    t.integer  "d_30_cli"
-    t.integer  "d15_t"
-    t.integer  "d_15_hi"
-    t.integer  "d_15_li"
-    t.integer  "d_15_chi"
-    t.integer  "d_15_cli"
-    t.integer  "d7_t"
-    t.integer  "d_7_hi"
-    t.integer  "d_7_li"
-    t.integer  "d_7_chi"
-    t.integer  "d_7_cli"
-    t.integer  "d3_t"
-    t.integer  "d_3_hi"
-    t.integer  "d_3_li"
-    t.integer  "d_3_chi"
-    t.integer  "d_3_cli"
-    t.float    "avg_high"
-    t.float    "avg_low"
-    t.float    "avg_close"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "bse4p_trends", force: true do |t|
-    t.integer  "bse_stock_id"
     t.string   "stock_name",   null: false
-    t.date     "date"
+    t.date     "date",         null: false
     t.integer  "d30_t"
     t.integer  "d_30_hi"
     t.integer  "d_30_li"
@@ -222,6 +165,40 @@ ActiveRecord::Schema.define(version: 20140708065610) do
     t.integer  "d_3_cli"
     t.integer  "bs_signal",    null: false
     t.float    "last_close",   null: false
+    t.float    "avg_open",     null: false
+    t.float    "avg_high"
+    t.float    "avg_low"
+    t.float    "avg_close"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "bse4p_trends", force: true do |t|
+    t.integer  "bse_stock_id"
+    t.string   "stock_name"
+    t.date     "date"
+    t.integer  "d30_t"
+    t.integer  "d_30_hi"
+    t.integer  "d_30_li"
+    t.integer  "d_30_chi"
+    t.integer  "d_30_cli"
+    t.integer  "d15_t"
+    t.integer  "d_15_hi"
+    t.integer  "d_15_li"
+    t.integer  "d_15_chi"
+    t.integer  "d_15_cli"
+    t.integer  "d7_t"
+    t.integer  "d_7_hi"
+    t.integer  "d_7_li"
+    t.integer  "d_7_chi"
+    t.integer  "d_7_cli"
+    t.integer  "d3_t"
+    t.integer  "d_3_hi"
+    t.integer  "d_3_li"
+    t.integer  "d_3_chi"
+    t.integer  "d_3_cli"
+    t.integer  "bs_signal"
+    t.float    "last_close"
     t.float    "avg_high"
     t.float    "avg_low"
     t.float    "avg_close"
@@ -246,17 +223,20 @@ ActiveRecord::Schema.define(version: 20140708065610) do
     t.integer "volume"
     t.integer "no_of_trades"
     t.integer "total_turnover"
-    t.integer "bs_signal"
-    t.float   "oh_diff"
-    t.float   "ol_diff"
-    t.float   "oc_diff"
-    t.float   "ch_diff"
-    t.float   "cl_diff"
-    t.float   "cc_diff"
+    t.integer "bs_signal",      null: false
+    t.float   "oh_diff",        null: false
+    t.float   "ol_diff",        null: false
+    t.float   "oc_diff",        null: false
+    t.float   "lco_diff",       null: false
+    t.float   "ch_diff",        null: false
+    t.float   "cl_diff",        null: false
+    t.float   "cc_diff",        null: false
   end
 
   create_table "nse1_trends", force: true do |t|
     t.integer  "nse_stock_id"
+    t.string   "stock_name"
+    t.date     "date"
     t.integer  "d30_t"
     t.integer  "d_30_hi"
     t.integer  "d_30_li"
@@ -277,6 +257,9 @@ ActiveRecord::Schema.define(version: 20140708065610) do
     t.integer  "d_3_li"
     t.integer  "d_3_chi"
     t.integer  "d_3_cli"
+    t.integer  "bs_signal"
+    t.float    "last_close"
+    t.float    "avg_open"
     t.float    "avg_high"
     t.float    "avg_low"
     t.float    "avg_close"
@@ -286,6 +269,8 @@ ActiveRecord::Schema.define(version: 20140708065610) do
 
   create_table "nse2_trends", force: true do |t|
     t.integer  "nse_stock_id"
+    t.string   "stock_name"
+    t.date     "date"
     t.integer  "d30_t"
     t.integer  "d_30_hi"
     t.integer  "d_30_li"
@@ -306,6 +291,9 @@ ActiveRecord::Schema.define(version: 20140708065610) do
     t.integer  "d_3_li"
     t.integer  "d_3_chi"
     t.integer  "d_3_cli"
+    t.integer  "bs_signal"
+    t.float    "last_close"
+    t.float    "avg_open"
     t.float    "avg_high"
     t.float    "avg_low"
     t.float    "avg_close"
@@ -315,6 +303,8 @@ ActiveRecord::Schema.define(version: 20140708065610) do
 
   create_table "nse3_trends", force: true do |t|
     t.integer  "nse_stock_id"
+    t.string   "stock_name"
+    t.date     "date"
     t.integer  "d30_t"
     t.integer  "d_30_hi"
     t.integer  "d_30_li"
@@ -335,6 +325,9 @@ ActiveRecord::Schema.define(version: 20140708065610) do
     t.integer  "d_3_li"
     t.integer  "d_3_chi"
     t.integer  "d_3_cli"
+    t.integer  "bs_signal"
+    t.float    "last_close"
+    t.float    "avg_open"
     t.float    "avg_high"
     t.float    "avg_low"
     t.float    "avg_close"
@@ -344,6 +337,8 @@ ActiveRecord::Schema.define(version: 20140708065610) do
 
   create_table "nse4_trends", force: true do |t|
     t.integer  "nse_stock_id"
+    t.string   "stock_name"
+    t.date     "date"
     t.integer  "d30_t"
     t.integer  "d_30_hi"
     t.integer  "d_30_li"
@@ -364,6 +359,9 @@ ActiveRecord::Schema.define(version: 20140708065610) do
     t.integer  "d_3_li"
     t.integer  "d_3_chi"
     t.integer  "d_3_cli"
+    t.integer  "bs_signal"
+    t.float    "last_close"
+    t.float    "avg_open"
     t.float    "avg_high"
     t.float    "avg_low"
     t.float    "avg_close"
@@ -385,6 +383,13 @@ ActiveRecord::Schema.define(version: 20140708065610) do
     t.float   "close"
     t.integer "volume"
     t.float   "turnover"
+    t.integer "bs_signal",    null: false
+    t.float   "oh_diff",      null: false
+    t.float   "ol_diff",      null: false
+    t.float   "oc_diff",      null: false
+    t.float   "ch_diff",      null: false
+    t.float   "cl_diff",      null: false
+    t.float   "cc_diff",      null: false
   end
 
 end

@@ -4,9 +4,9 @@ class BseStocksDetail < ActiveRecord::Base
 
 	def self.spread
 		#ids = BseStock.all.collect(&:id)
-		ids = BseStock.where(:vol_category => 4).collect(&:id)			
+		ids = BseStock.all.collect(&:id)			
 		ids.each do |stock|
-			data = BseStocksDetail.where("bse_stock_id = ?", stock).order("date DESC").limit(200)
+			data = BseStocksDetail.where("bse_stock_id = ?", stock).order("date DESC").limit(15)
 			for i in 0..data.count - 2
 				dt = data[i]
 				dy = data[i+1]
@@ -17,8 +17,9 @@ class BseStocksDetail < ActiveRecord::Base
 				dy_ch = (((dt.high - dy.close) / dy.close)*100).round(2).to_f
 				dy_cl = (((dt.low - dy.close) / dy.close)*100).round(2).to_f
 				dy_cc = (((dt.close - dy.close) / dy.close)*100).round(2).to_f
+				dy_lco = (((dt.open - dy.close) / dy.close)*100).round(2).to_f
 				dt.update_attributes(:bs_signal => bs, :oh_diff => dt_oh, :ol_diff => dt_ol,
-					:oc_diff => dt_oc, :ch_diff => dy_ch, :cl_diff => dy_cl, :cc_diff => dy_cc)
+					:oc_diff => dt_oc, :lco_diff => dy_lco, :ch_diff => dy_ch, :cl_diff => dy_cl, :cc_diff => dy_cc)			
 			end
 		end
 	end
