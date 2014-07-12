@@ -7,7 +7,7 @@ class Bse4Trend < ActiveRecord::Base
 		# rake db:migrate:down VERSION=20140705140950
 		
 		Bse4Trend.destroy_all
-		ids = BseStock.where(:vol_category => 4).collect(&:id)
+		ids = BseStock.where(:vol_category => 4)
 		ids.each do |stock|
 		#stock = ids[0]
 			data = BseStocksDetail.where("bse_stock_id = ?", stock).order("date DESC").limit(30)
@@ -37,15 +37,19 @@ class Bse4Trend < ActiveRecord::Base
 			avg_l = data.collect(&:cl_diff)[0..30/(2**3) - 1].sum / 3
 			avg_c = data.collect(&:cc_diff)[0..30/(2**3) - 1].sum / 3
 
-			Bse4Trend.create(:bse_stock_id => stock, :d30_t => data_ti[0], :d_30_hi => data_hi[0],
+			Bse4Trend.create(:bse_stock_id => stock, :stock_name => stock.stock_name,
+				:date => data[0].date,
+				:d30_t => data_ti[0], :d_30_hi => data_hi[0],
 				:d_30_li => data_li[0], :d_30_chi => data_chi[0], :d_30_cli	=> data_cli[0], 
 				:d15_t => data_ti[1], :d_15_hi => data_hi[1], :d_15_li => data_li[1], 
 				:d_15_chi => data_chi[1], :d_15_cli	=> data_cli[1],
 				:d7_t => data_ti[2], :d_7_hi => data_hi[2], :d_7_li => data_li[2], 
 				:d_7_chi => data_chi[2], :d_7_cli	=> data_cli[2],
 				:d3_t => data_ti[3], :d_3_hi => data_hi[3], :d_3_li => data_li[3], 
-				:d_3_chi => data_chi[3], :d_3_cli	=> data_cli[3], 
-				:avg_high => avg_h, :avg_low => avg_l, :avg_close => avg_c )
+				:d_3_chi => data_chi[3], :d_3_cli	=> data_cli[3],
+				:bs_signal => data[0].bs_signal, :last_close => data[0].close,
+				:avg_open => avg_o, :avg_high => avg_h, :avg_low => avg_l, 
+				:avg_close => avg_c )
 		end					
 	end
 end

@@ -22,8 +22,7 @@ class CreateBse4pTrends < ActiveRecord::Migration
       t.integer :d_7_chi		#last close highest occured in 30 days
       t.integer :d_7_cli		#last close lowest occured in 30 days
 
-      t.integer :d3_t			#30 days trend
-      t.integer :d_3_hi		#last highest occured in 30 days
+      t.integer :d3_t			#30 days trend      t.integer :d_3_hi		#last highest occured in 30 days
       t.integer :d_3_li		#last lowest occured in 30 days
       t.integer :d_3_chi		#last close highest occured in 30 days
       t.integer :d_3_cli		#last close lowest occured in 30 days
