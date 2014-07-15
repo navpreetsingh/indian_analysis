@@ -7,10 +7,9 @@ class Bse4pTrend < ActiveRecord::Base
 		# rake db:migrate:down VERSION=20140705140950
 		# rake db:migrate:down VERSION=20140705140950
 		
-		#Bse4pTrend.destroy_all
 		ids = BseStock.where("vol_category >= 3")
 		ids.each do |stock|
-		#stock = ids[0]
+
 			t = Time.now
 			data = BseStocksDetail.where("bse_stock_id = ? and date <= '2014-07-15'", stock.id).order("date DESC").limit(31)
 			zz = 0
@@ -64,6 +63,6 @@ class Bse4pTrend < ActiveRecord::Base
 				zz += 1
 			end	
 			puts Time.now - t
-		end				
+		#end				
 	end	
 end
