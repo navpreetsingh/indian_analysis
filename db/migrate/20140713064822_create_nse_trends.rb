@@ -1,8 +1,9 @@
-class CreateBse4Trends < ActiveRecord::Migration
-  def self.up
-    create_table :bse4_trends do |t|
-      t.integer :bse_stock_id
+class CreateNseTrends < ActiveRecord::Migration
+  def change
+    create_table :nse_trends do |t|
+      t.integer :nse_stock_id
       t.string :stock_name
+      t.integer :vol_category
       t.date :date
 
       t.integer :d30_t			#30 days trend
@@ -36,11 +37,7 @@ class CreateBse4Trends < ActiveRecord::Migration
       t.float :avg_high
       t.float :avg_low
       t.float :avg_close
-      t.timestamps
+      t.timestamps      
     end
   end
-
-  def self.down
-  	drop_table :bse4_trends
-  end	
 end

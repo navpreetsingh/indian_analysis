@@ -13,6 +13,7 @@ class CreateNseStocksDetails < ActiveRecord::Migration
       t.float :oh_diff
       t.float :ol_diff
       t.float :oc_diff
+      t.float :lco_diff
       t.float :ch_diff
       t.float :cl_diff
       t.float :cc_diff     

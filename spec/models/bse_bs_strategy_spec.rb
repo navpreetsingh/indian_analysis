@@ -1,5 +1,5 @@
 require 'spec_helper'
 
-describe Nse2Trend do
+describe BseBsStrategy do
   pending "add some examples to (or delete) #{__FILE__}"
 end
