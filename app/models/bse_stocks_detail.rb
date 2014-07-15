@@ -6,68 +6,66 @@ class BseStocksDetail < ActiveRecord::Base
 	validates :date, uniqueness: { scope: :bse_stock_id}
 
 	def self.auto
-		BseStocksDetail.update_data
+		BseStocksDetail.update_imp_data
 		BseStocksDetail.spread
 		BseTrend.trend
-		BseBsStrategy.strategy1
-		BseBsStrategy.strategy2
-		BseBsStrategy.strategy3
+		BseBsStrategy.strategy
+		BseDump.update_data
 	end
 	
 
 	def self.spread
-		ids = BseStock.where("vol_category >= 3").collect(&:id)			
+		ids = BseStock.where("vol_category >= 3").collect(&:id)	
+		file = File.new("Bse_spread", "w+")			
 		ids.each do |stock|
-			data = BseStocksDetail.where("bse_stock_id = ?", stock).order("date DESC").limit(2)
-			for i in 0..data.count - 2
-				dt = data[i]
-				dy = data[i+1]
-				dt_oh = (((dt.high - dt.open) / dt.open)*100).round(2).to_f
-				dt_ol = (((dt.low - dt.open) / dt.open)*100).round(2).to_f
-				dt_oc = (((dt.close - dt.open) / dt.open)*100).round(2).to_f
-				bs = dt_oc > 0 ? 1 : -1
-				dy_ch = (((dt.high - dy.close) / dy.close)*100).round(2).to_f
-				dy_cl = (((dt.low - dy.close) / dy.close)*100).round(2).to_f
-				dy_cc = (((dt.close - dy.close) / dy.close)*100).round(2).to_f
-				dy_lco = (((dt.open - dy.close) / dy.close)*100).round(2).to_f
-				dt.update_attributes(:bs_signal => bs, :oh_diff => dt_oh, :ol_diff => dt_ol,
-					:oc_diff => dt_oc, :lco_diff => dy_lco, :ch_diff => dy_ch, :cl_diff => dy_cl, :cc_diff => dy_cc)			
+			begin
+				data = BseStocksDetail.where("bse_stock_id = ?", stock).order("date DESC").limit(2)
+				for i in 0..data.count - 2
+					dt = data[i]
+					dy = data[i+1]				
+					dy_ch = (((dt.high - dy.close) / dy.close)*100).round(2).to_f
+					dy_cl = (((dt.low - dy.close) / dy.close)*100).round(2).to_f
+					dy_cc = (((dt.close - dy.close) / dy.close)*100).round(2).to_f
+					dy_lco = (((dt.open - dy.close) / dy.close)*100).round(2).to_f
+					dt.update_attributes(:lco_diff => dy_lco, :ch_diff => dy_ch, 
+						:cl_diff => dy_cl, :cc_diff => dy_cc)			
+				end
+			rescue Exception => e
+				file.syswrite (e.message)
+				file.syswrite ("\nStock: #{d[1]}\n")				
+				file.syswrite("\nData: #{d}\n\n\n\n\n")
 			end
 		end
 	end
-
-	def self.update_data
-		data = CSV.read("/home/navpreet/Downloads/bhav_copy/bse_bhav_copy.csv")
+	
+	def self.update_imp_data		
+		#data = CSV.read("/home/navpreet/Downloads/bhav_copy/bse_bhav_copy.csv")
+		data = CSV.read("/home/trantor/Downloads/bhav_copy/bse_bhav_copy.csv")
 		data.delete_at(0)
-		stocks = BseStock.all
+		stocks = BseStock.where("vol_category >= 3")
 		s_names = stocks.collect(&:stock_name)
 		date = Time.now.strftime("%Y-%m-%d")
-		date1 = Time.now.strftime("%m/%d/%Y")
-		s = 1
+		file = File.new("Bse_imp_data", "w+")
 		data.each do |d|
-			if d[3] == "Q" 				
-				if s_names.include?(d[1])
+			begin
+				if d[3] == "Q" and s_names.include?(d[1])
 					id = stocks.find_by_stock_name(d[1]).id
+					dt_oh = (((d[5].to_f - d[4].to_f) / d[4].to_f)*100).round(2).to_f
+					dt_ol = (((d[6].to_f - d[4].to_f) / d[4].to_f)*100).round(2).to_f
+					dt_oc = (((d[7].to_f - d[4].to_f) / d[4].to_f)*100).round(2).to_f
+					bs = dt_oc > 0 ? 1 : -1
 					BseStocksDetail.create(:bse_stock_id => id,
-					:date => date, :open => d[4], :high => d[5], :low => d[6], :close => d[7],
-					:volume => d[11], :no_of_trades => d[10], :total_turnover => d[12])
-				elsif d[11].to_i > 50000
-					BseStock.create(:stock_name => d[1])
-					id = BseStock.last.id
-					file = open("http://www.bseindia.com/stockinfo/stockprc2_excel.aspx?scripcd=#{d[0]}&FromDate=01/01/2009&ToDate=#{date1}&OldDMY=D")
-					stock_data = file.read	
-					stock_data = CSV.parse(stock_data)
-					stock_data.delete([])
-					stock_data.delete_at(0)
-					stock_data = stock_data.reverse	
-					stock_data.each do |s|					
-							BseStocksDetail.create(:bse_stock_id => id,
-								:date => date, :open => d[4], :high => d[5], :low => d[6], :close => d[7],
-								:volume => d[11], :no_of_trades => d[10], :total_turnover => d[12])
-					end
+						:date => date, :open => d[4], :high => d[5], :low => d[6], :close => d[7],
+						:volume => d[11], :no_of_trades => d[10], :total_turnover => d[12],
+						:bs_signal => bs, :oh_diff => dt_oh, :ol_diff => dt_ol,
+						:oc_diff => dt_oc)									
 				end
-			end	
-			s += 1
+			rescue Exception => e
+				file.syswrite (e.message)
+				file.syswrite ("\nStock: #{d[1]}\n")				
+				file.syswrite("\nData: #{d}\n\n\n\n\n")
+			end
 		end
+		file.close
 	end
 end

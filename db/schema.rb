@@ -11,19 +11,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140713120424) do
+ActiveRecord::Schema.define(version: 20140715074150) do
 
-  create_table "bse4p_bs_strategies", force: true do |t|
-    t.string   "stock_name"
+  create_table "bse4_bs_strategies", force: true do |t|
+    t.string   "stock_name",    null: false
     t.integer  "bse_stock_id"
     t.date     "date"
     t.date     "executed_date"
     t.float    "last_close"
     t.integer  "bs_signal"
     t.float    "open"
-    t.float    "high"
-    t.float    "low"
-    t.float    "close"
+    t.float    "high",          null: false
+    t.float    "low",           null: false
+    t.float    "close",         null: false
     t.float    "target_1"
     t.float    "stop_loss_1"
     t.float    "target_2"
@@ -39,7 +39,7 @@ ActiveRecord::Schema.define(version: 20140713120424) do
 
   create_table "bse4p_trends", force: true do |t|
     t.integer  "bse_stock_id"
-    t.string   "stock_name"
+    t.string   "stock_name",   null: false
     t.date     "date"
     t.integer  "d30_t"
     t.integer  "d_30_hi"
@@ -61,8 +61,8 @@ ActiveRecord::Schema.define(version: 20140713120424) do
     t.integer  "d_3_li"
     t.integer  "d_3_chi"
     t.integer  "d_3_cli"
-    t.integer  "bs_signal"
-    t.float    "last_close"
+    t.integer  "bs_signal",    null: false
+    t.float    "last_close",   null: false
     t.float    "avg_high"
     t.float    "avg_low"
     t.float    "avg_close"
@@ -76,7 +76,7 @@ ActiveRecord::Schema.define(version: 20140713120424) do
     t.date     "date"
     t.float    "last_close"
     t.integer  "bs_signal"
-    t.integer  "vol_category", null: false
+    t.integer  "vol_category"
     t.float    "open"
     t.float    "high"
     t.float    "low"
@@ -93,10 +93,22 @@ ActiveRecord::Schema.define(version: 20140713120424) do
     t.datetime "updated_at"
   end
 
+  create_table "bse_dumps", force: true do |t|
+    t.integer "bse_stock_id"
+    t.date    "date"
+    t.float   "open"
+    t.float   "high"
+    t.float   "low"
+    t.float   "close"
+    t.integer "volume"
+    t.integer "no_of_trades"
+    t.integer "total_turnover"
+  end
+
   create_table "bse_stocks", force: true do |t|
     t.string  "stock_name"
     t.integer "vol_category"
-    t.integer "price_category"
+    t.integer "price_category", null: false
   end
 
   create_table "bse_stocks_details", force: true do |t|
@@ -113,7 +125,7 @@ ActiveRecord::Schema.define(version: 20140713120424) do
     t.float   "oh_diff"
     t.float   "ol_diff"
     t.float   "oc_diff"
-    t.float   "lco_diff"
+    t.float   "lco_diff",       null: false
     t.float   "ch_diff"
     t.float   "cl_diff"
     t.float   "cc_diff"
@@ -175,6 +187,17 @@ ActiveRecord::Schema.define(version: 20140713120424) do
     t.integer  "strategy"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "nse_dumps", force: true do |t|
+    t.integer "nse_stock_id"
+    t.date    "date"
+    t.float   "open"
+    t.float   "high"
+    t.float   "low"
+    t.float   "close"
+    t.integer "volume"
+    t.float   "turnover"
   end
 
   create_table "nse_stocks", force: true do |t|
