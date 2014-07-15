@@ -1,21 +1,21 @@
 class Bse4pTrend < ActiveRecord::Base
-	belongs_to :bse_stock
-	has_and_belongs_to_many :bse_stocks_details
+	belongs_to :bse_stock	
+	validates :date, uniqueness: { scope: :bse_stock_id}
 
 	def self.trend4
 		# Run below 2 commands before calling this function
 		# rake db:migrate:down VERSION=20140705140950
 		# rake db:migrate:down VERSION=20140705140950
 		
-		Bse4pTrend.destroy_all
-		ids = BseStock.where(:vol_category => 4)
+		#Bse4pTrend.destroy_all
+		ids = BseStock.where("vol_category >= 3")
 		ids.each do |stock|
 		#stock = ids[0]
 			t = Time.now
-			data = BseStocksDetail.where("bse_stock_id = ?", stock.id).order("date DESC").limit(200)
+			data = BseStocksDetail.where("bse_stock_id = ? and date <= '2014-07-15'", stock.id).order("date DESC").limit(31)
 			zz = 0
 
-			for cc in zz..data.count - 31
+			for cc in zz..data.count - 30
 				date = data[cc].date
 				bs_signal = data[cc].bs_signal
 				last_close = data[cc].close
