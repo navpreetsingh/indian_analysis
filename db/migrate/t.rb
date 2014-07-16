@@ -2,13 +2,7 @@ class Bse4pTrend < ActiveRecord::Base
 	belongs_to :bse_stock	
 	validates :date, uniqueness: { scope: :bse_stock_id}
 
-	def self.auto
-		Bse4pTrend.trend
-		Bse4BsStrategy.strategy
-		StrategyAnalysis.analysis
-	end
-
-	def self.trend
+	def self.trend4
 		# Run below 2 commands before calling this function
 		# rake db:migrate:down VERSION=20140705140950
 		# rake db:migrate:down VERSION=20140705140950
@@ -69,6 +63,6 @@ class Bse4pTrend < ActiveRecord::Base
 				zz += 1
 			end	
 			puts Time.now - t
-		end				
+		#end				
 	end	
 end
