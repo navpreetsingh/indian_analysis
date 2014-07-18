@@ -45,7 +45,7 @@ class BseStocksDetail < ActiveRecord::Base
 		file = File.new("Bse_spread_new", "w+")			
 		ids.each do |stock|
 			begin
-				data = BseStocksDetail.where("bse_stock_id = ?", stock).order("date DESC").limit(2)
+				data = BseStocksDetail.where("bse_stock_id = ?", stock).order("date DESC")
 				for i in 0..data.count - 2
 					dt = data[i]
 	 				dy = data[i+1]

@@ -5,8 +5,8 @@ class BseTrend < ActiveRecord::Base
 	def self.trend
 		ids = BseStock.where("vol_category >= 3")
 		file = File.new("Bse_Trend", "w+")
-		date = Date.today
-		#date = Date.yesterday
+		#date = Date.today
+		date = Date.yesterday
 		ids.each do |stock|	
 			begin	
 				data = BseStocksDetail.where("bse_stock_id = ?", stock.id).order("date DESC").limit(30)				
