@@ -40,7 +40,7 @@ class NseStocksDetail < ActiveRecord::Base
 
 	def self.spread_new		
 		ids = NseStock.where("vol_category >= 3").collect(&:id)
-		file = File.new("Nse_spread", "w+")			
+		file = File.new("Nse_spread_new", "w+")			
 		ids.each do |stock|
 			begin
 				data = NseStocksDetail.where("nse_stock_id = ?", stock).order("date DESC")

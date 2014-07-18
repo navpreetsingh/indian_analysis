@@ -1,8 +1,0 @@
-nil can't be coerced into Fixnum
- Stock: #<BseStock:0xc4650bc>
-
-Data: #<ActiveRecord::Relation::ActiveRecord_Relation_BseStocksDetail:0xcbcf7f8>
-
-
-
-
