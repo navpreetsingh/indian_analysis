@@ -9,8 +9,8 @@ class NseTrend < ActiveRecord::Base
 		file = File.new("Nse_Trend", "w+")
 		NseTrend.destroy_all
 		ids = NseStock.where("vol_category >= 3")
-		#date = Date.today
-		date = Date.yesterday
+		date = Date.today
+		#date = Date.yesterday
 		ids.each do |stock|
 			begin
 				data = NseStocksDetail.where("nse_stock_id = ?", stock.id).order("date DESC").limit(30)
