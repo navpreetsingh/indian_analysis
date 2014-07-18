@@ -10,6 +10,7 @@ class NseStocksDetail < ActiveRecord::Base
 		NseTrend.trend
 		NseBsStrategy.strategy
 		NseDump.update_data
+		#NseStock.category
 	end
 
 	def self.spread		
@@ -17,6 +18,7 @@ class NseStocksDetail < ActiveRecord::Base
 		file = File.new("Nse_spread", "w+")			
 		ids.each do |stock|
 			begin
+
 				data = NseStocksDetail.where("nse_stock_id = ?", stock).order("date DESC").limit(2)
 				for i in 0..data.count - 2
 					dt = data[i]
@@ -42,10 +44,11 @@ class NseStocksDetail < ActiveRecord::Base
 		stocks = NseStock.where("vol_category >= 3")
 		s_names = stocks.collect(&:stock_name)
 		date = Time.now.strftime("%Y-%m-%d")
+		#date = "2014-07-16"
 		file = File.new("Nse_imp_data", "w+")		
 		data.each do |d|
-			begin
-				if d[1] == "EQ" and s_names.include?(d[0])
+			begin				
+				if s_names.include?(d[0])					
 					id = stocks.find_by_stock_name(d[0]).id
 					dt_oh = (((d[3].to_f - d[2].to_f) / d[2].to_f)*100).round(2).to_f
 					dt_ol = (((d[4].to_f - d[2].to_f) / d[2].to_f)*100).round(2).to_f

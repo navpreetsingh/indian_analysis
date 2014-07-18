@@ -1,0 +1,160 @@
+undefined method `+' for nil:NilClass
+ Stock: #<BseStock:0xb1e97d0>
+
+Data: #<ActiveRecord::Relation::ActiveRecord_Relation_BseStocksDetail:0xb105a08>
+
+
+
+
+undefined method `+' for nil:NilClass
+ Stock: #<BseStock:0xb1f15d4>
+
+Data: #<ActiveRecord::Relation::ActiveRecord_Relation_BseStocksDetail:0xbb7ec28>
+
+
+
+
+undefined method `+' for nil:NilClass
+ Stock: #<BseStock:0xb2078d4>
+
+Data: #<ActiveRecord::Relation::ActiveRecord_Relation_BseStocksDetail:0xb9bc7f0>
+
+
+
+
+nil can't be coerced into Fixnum
+ Stock: #<BseStock:0xb216e38>
+
+Data: #<ActiveRecord::Relation::ActiveRecord_Relation_BseStocksDetail:0xbb6b204>
+
+
+
+
+undefined method `+' for nil:NilClass
+ Stock: #<BseStock:0xb21432c>
+
+Data: #<ActiveRecord::Relation::ActiveRecord_Relation_BseStocksDetail:0xb311dc4>
+
+
+
+
+undefined method `+' for nil:NilClass
+ Stock: #<BseStock:0xb21fc2c>
+
+Data: #<ActiveRecord::Relation::ActiveRecord_Relation_BseStocksDetail:0xb4cc8a8>
+
+
+
+
+nil can't be coerced into Fixnum
+ Stock: #<BseStock:0xb21c388>
+
+Data: #<ActiveRecord::Relation::ActiveRecord_Relation_BseStocksDetail:0xbb16830>
+
+
+
+
+nil can't be coerced into Fixnum
+ Stock: #<BseStock:0xb22337c>
+
+Data: #<ActiveRecord::Relation::ActiveRecord_Relation_BseStocksDetail:0xaadb150>
+
+
+
+
+nil can't be coerced into Fixnum
+ Stock: #<BseStock:0xb232d68>
+
+Data: #<ActiveRecord::Relation::ActiveRecord_Relation_BseStocksDetail:0xb9c1b24>
+
+
+
+
+undefined method `+' for nil:NilClass
+ Stock: #<BseStock:0xb23147c>
+
+Data: #<ActiveRecord::Relation::ActiveRecord_Relation_BseStocksDetail:0xbb7013c>
+
+
+
+
+nil can't be coerced into Fixnum
+ Stock: #<BseStock:0xb231238>
+
+Data: #<ActiveRecord::Relation::ActiveRecord_Relation_BseStocksDetail:0xbb87f08>
+
+
+
+
+undefined method `+' for nil:NilClass
+ Stock: #<BseStock:0xb23f4f0>
+
+Data: #<ActiveRecord::Relation::ActiveRecord_Relation_BseStocksDetail:0xbb45824>
+
+
+
+
+undefined method `+' for nil:NilClass
+ Stock: #<BseStock:0xb24d168>
+
+Data: #<ActiveRecord::Relation::ActiveRecord_Relation_BseStocksDetail:0xb40e498>
+
+
+
+
+nil can't be coerced into Fixnum
+ Stock: #<BseStock:0xb252f28>
+
+Data: #<ActiveRecord::Relation::ActiveRecord_Relation_BseStocksDetail:0xbb4f0cc>
+
+
+
+
+undefined method `+' for nil:NilClass
+ Stock: #<BseStock:0xb2501d8>
+
+Data: #<ActiveRecord::Relation::ActiveRecord_Relation_BseStocksDetail:0xad026cc>
+
+
+
+
+nil can't be coerced into Fixnum
+ Stock: #<BseStock:0xb267b80>
+
+Data: #<ActiveRecord::Relation::ActiveRecord_Relation_BseStocksDetail:0xba20ed0>
+
+
+
+
+nil can't be coerced into Fixnum
+ Stock: #<BseStock:0xb265bc8>
+
+Data: #<ActiveRecord::Relation::ActiveRecord_Relation_BseStocksDetail:0xbbb7ac8>
+
+
+
+
+nil can't be coerced into Fixnum
+ Stock: #<BseStock:0xb2949c8>
+
+Data: #<ActiveRecord::Relation::ActiveRecord_Relation_BseStocksDetail:0xbad806c>
+
+
+
+
+nil can't be coerced into Fixnum
+ Stock: #<BseStock:0xb29f0a8>
+
+Data: #<ActiveRecord::Relation::ActiveRecord_Relation_BseStocksDetail:0xbb9ca48>
+
+
+
+
+nil can't be coerced into Fixnum
+ Stock: #<BseStock:0xb2af818>
+
+Data: #<ActiveRecord::Relation::ActiveRecord_Relation_BseStocksDetail:0xba6dc6c>
+
+
+
+

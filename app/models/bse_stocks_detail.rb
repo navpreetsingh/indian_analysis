@@ -11,6 +11,7 @@ class BseStocksDetail < ActiveRecord::Base
 		BseTrend.trend
 		BseBsStrategy.strategy
 		BseDump.update_data
+		#BseStock.category
 	end
 	
 
@@ -43,11 +44,11 @@ class BseStocksDetail < ActiveRecord::Base
 		data = CSV.read("/home/trantor/Downloads/bhav_copy/bse_bhav_copy.csv")
 		data.delete_at(0)
 		stocks = BseStock.where("vol_category >= 3")
-		s_names = stocks.collect(&:stock_name)
+		s_names = stocks.collect(&:stock_name)		
 		date = Time.now.strftime("%Y-%m-%d")
 		file = File.new("Bse_imp_data", "w+")
 		data.each do |d|
-			begin
+			begin				
 				if d[3] == "Q" and s_names.include?(d[1])
 					id = stocks.find_by_stock_name(d[1]).id
 					dt_oh = (((d[5].to_f - d[4].to_f) / d[4].to_f)*100).round(2).to_f
