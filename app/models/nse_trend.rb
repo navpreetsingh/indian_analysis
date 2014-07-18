@@ -14,7 +14,8 @@ class NseTrend < ActiveRecord::Base
 		ids.each do |stock|
 			begin
 				data = NseStocksDetail.where("nse_stock_id = ?", stock.id).order("date DESC").limit(30)
-				if data.date[0] == date
+				
+				if data[0].date == date
 					data_t = data.collect(&:bs_signal)
 					data_h = data.collect(&:high)
 					data_l = data.collect(&:low)
