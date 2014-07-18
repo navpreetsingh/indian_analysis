@@ -38,6 +38,7 @@ class BseStocksDetail < ActiveRecord::Base
 				file.syswrite("\nData: #{d}\n\n\n\n\n")
 			end
 		end
+		file.close
 	end
 
 	def self.spread_new
@@ -65,6 +66,7 @@ class BseStocksDetail < ActiveRecord::Base
 				file.syswrite("\nData: #{d}\n\n\n\n\n")
 			end
 		end
+		file.close
 	end
 	
 	def self.update_imp_data		

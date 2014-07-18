@@ -45,6 +45,7 @@ class BseDump < ActiveRecord::Base
 				file.syswrite("\nData: #{dt.to_a}\n\n\n\n\n")
 			end		
 		end
+		file.close
 	end
 
 	def self.not_getting_updated

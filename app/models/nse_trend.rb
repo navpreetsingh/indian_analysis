@@ -61,6 +61,7 @@ class NseTrend < ActiveRecord::Base
 				file.syswrite ("\n Stock: #{stock.stock_name}\n")				
 				file.syswrite("\nData: #{data.to_a}\n\n\n\n\n")
 			end
-		end					
+		end	
+		file.close				
 	end
 end

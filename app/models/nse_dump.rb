@@ -43,6 +43,7 @@ class NseDump < ActiveRecord::Base
 				file.syswrite("\nData: #{d.to_a}\n\n\n\n\n")
 			end		
 		end
+		file.close
 	end
 
 	def self.not_getting_updated
