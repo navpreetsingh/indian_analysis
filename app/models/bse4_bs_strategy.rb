@@ -6,7 +6,7 @@ class Bse4BsStrategy < ActiveRecord::Base
 		dates = Bse4pTrend.uniq.pluck(:date).sort
 		
 		#dates.each do |date|
-		date = 1.day.ago.strftime("%Y-%m-%d")
+		date = dates[-2]
 		
 		#For best buyers
 			data = Bse4pTrend.where("date = ?", date).order("avg_high desc")
