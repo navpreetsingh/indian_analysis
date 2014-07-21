@@ -9,6 +9,7 @@ class NseStocksDetail < ActiveRecord::Base
 		NseStocksDetail.spread
 		NseTrend.trend
 		NseBsStrategy.strategy
+		NseBsStrategy.csv_op
 		NseDump.update_data
 		#NseStock.category
 		# NseStocksDetail.spread_new
