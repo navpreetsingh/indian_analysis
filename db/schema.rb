@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140716095430) do
+ActiveRecord::Schema.define(version: 20140719053424) do
 
   create_table "bse4_bs_strategies", force: true do |t|
     t.string   "stock_name",    null: false
@@ -163,6 +163,11 @@ ActiveRecord::Schema.define(version: 20140716095430) do
     t.float    "avg_high"
     t.float    "avg_low"
     t.float    "avg_close"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "examples", force: true do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
   end

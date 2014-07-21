@@ -1,0 +1,103 @@
+<h1>BSE</h1>
+<h3>TOP BUYERS</h3>
+<table>
+	<tr>		
+		<th>Stock Name</th>
+		<th>Last Close</th>
+		<th>Target 1</th>
+		<th>Stop Loss 1</th>
+		<th>Target 2</th>
+		<th>Stop Loss 2</th>
+		<th>Target 3</th>
+		<th>Stop Loss 3</th>
+	</tr>
+	<% @st_data_bse.where("strategy = 1 and bs_signal = 1").limit(15).each do |d| %>
+		<tr>			
+			<th><%= d.stock_name %></th>
+			<th><%= d.last_close %></th>
+			<th><%= d.target_1 %></th>
+			<th><%= d.stop_loss_1 %></th>
+			<th><%= d.target_2 %></th>
+			<th><%= d.stop_loss_2 %></th>
+			<th><%= d.target_3 %></th>
+			<th><%= d.stop_loss_3 %></th>			
+		</tr>
+	<% end -%>
+</table>
+<h3>TOP SELLERS</h3>
+<table>
+	<tr>		
+		<th>Stock Name</th>
+		<th>Last Close</th>
+		<th>Target 1</th>
+		<th>Stop Loss 1</th>
+		<th>Target 2</th>
+		<th>Stop Loss 2</th>
+		<th>Target 3</th>
+		<th>Stop Loss 3</th>
+	</tr>
+	<% @st_data_bse.where("strategy = 1 and bs_signal = -1").limit(15).each do |d| %>
+		<tr>			
+			<th><%= d.stock_name %></th>
+			<th><%= d.last_close %></th>
+			<th><%= d.target_1 %></th>
+			<th><%= d.stop_loss_1 %></th>
+			<th><%= d.target_2 %></th>
+			<th><%= d.stop_loss_2 %></th>
+			<th><%= d.target_3 %></th>
+			<th><%= d.stop_loss_3 %></th>			
+		</tr>
+	<% end -%>
+</table>
+
+<h1>NSE</h1>
+<h3>TOP BUYERS</h3>
+<table>
+	<tr>		
+		<th>Stock Name</th>
+		<th>Last Close</th>
+		<th>Target 1</th>
+		<th>Stop Loss 1</th>
+		<th>Target 2</th>
+		<th>Stop Loss 2</th>
+		<th>Target 3</th>
+		<th>Stop Loss 3</th>
+	</tr>
+	<% @st_data_nse.where("strategy = 1 and bs_signal = 1").limit(15).each do |d| %>
+		<tr>			
+			<th><%= d.stock_name %></th>
+			<th><%= d.last_close %></th>
+			<th><%= d.target_1 %></th>
+			<th><%= d.stop_loss_1 %></th>
+			<th><%= d.target_2 %></th>
+			<th><%= d.stop_loss_2 %></th>
+			<th><%= d.target_3 %></th>
+			<th><%= d.stop_loss_3 %></th>			
+		</tr>
+	<% end -%>
+</table>
+<h3>TOP SELLERS</h3>
+<table>
+	<tr>		
+		<th>Stock Name</th>
+		<th>Last Close</th>
+		<th>Target 1</th>
+		<th>Stop Loss 1</th>
+		<th>Target 2</th>
+		<th>Stop Loss 2</th>
+		<th>Target 3</th>
+		<th>Stop Loss 3</th>
+	</tr>
+	<% @st_data_nse.where("strategy = 1 and bs_signal = -1").limit(15).each do |d| %>
+		<tr>			
+			<th><%= d.stock_name %></th>
+			<th><%= d.last_close %></th>
+			<th><%= d.target_1 %></th>
+			<th><%= d.stop_loss_1 %></th>
+			<th><%= d.target_2 %></th>
+			<th><%= d.stop_loss_2 %></th>
+			<th><%= d.target_3 %></th>
+			<th><%= d.stop_loss_3 %></th>			
+		</tr>
+	<% end -%>
+</table>
