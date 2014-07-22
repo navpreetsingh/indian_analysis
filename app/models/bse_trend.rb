@@ -38,7 +38,7 @@ class BseTrend < ActiveRecord::Base
 					avg_c = data.collect(&:cc_diff)[0..30/(2**3) - 1].sum / 3
 
 					BseTrend.create(:bse_stock_id => stock.id, :stock_name => stock.stock_name,
-						:date => data[0].date, :vol_category => stock.vol_category,
+						:bse_code => stock.bse_code, :date => data[0].date, :vol_category => stock.vol_category,
 						:d30_t => data_ti[0], :d_30_hi => data_hi[0],
 						:d_30_li => data_li[0], :d_30_chi => data_chi[0], :d_30_cli	=> data_cli[0], 
 						:d15_t => data_ti[1], :d_15_hi => data_hi[1], :d_15_li => data_li[1], 

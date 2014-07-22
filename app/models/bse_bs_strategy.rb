@@ -63,7 +63,7 @@ validates :stock_name, uniqueness: true
 				st = 2 if d.d3_t == 1 and d.d7_t > 0
 				st = 3 if d.d3_t == -1 and d.d7_t > 0 and d.d15_t > 0
 				BseBsStrategy.create(:stock_name => d.stock_name, :bse_stock_id => d.bse_stock_id,
-					:date => d.date, :vol_category => d.vol_category, :last_close => d.last_close,
+					:bse_code => d.bse_code, :date => d.date, :vol_category => d.vol_category, :last_close => d.last_close,
 					:bs_signal => 1, :open => (d.last_close * ( 1 + (d.avg_open / 100))), 
 					:high => (d.last_close * (1 + (d.avg_high / 100))), 
 					:low => (d.last_close * (1 + (d.avg_low / 100))),
@@ -135,7 +135,7 @@ validates :stock_name, uniqueness: true
 				st = 2 if d.d3_t == -1 and d.d7_t < 0
 				st = 3 if d.d3_t == 1 and d.d7_t < 0 and d.d15_t < 0
 				BseBsStrategy.create(:stock_name => d.stock_name, :bse_stock_id => d.bse_stock_id,
-					:date => d.date, :vol_category => d.vol_category, :last_close => d.last_close,
+					:bse_code => d.bse_code, :date => d.date, :vol_category => d.vol_category, :last_close => d.last_close,
 					:bs_signal => -1, :open => (d.last_close * ( 1 + (d.avg_open / 100))), 
 					:high => (d.last_close * (1 + (d.avg_high / 100))), 
 					:low => (d.last_close * (1 + (d.avg_low / 100))),

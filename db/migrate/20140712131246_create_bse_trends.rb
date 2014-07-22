@@ -3,6 +3,7 @@ class CreateBseTrends < ActiveRecord::Migration
     create_table :bse_trends do |t|
       t.integer :bse_stock_id
       t.string :stock_name
+      t.string :bse_code
       t.integer :vol_category
       t.date :date
 

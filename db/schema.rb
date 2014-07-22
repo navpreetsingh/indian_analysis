@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140719053424) do
+ActiveRecord::Schema.define(version: 20140722062453) do
 
   create_table "bse4_bs_strategies", force: true do |t|
     t.string   "stock_name",    null: false
@@ -70,9 +70,36 @@ ActiveRecord::Schema.define(version: 20140719053424) do
     t.datetime "updated_at"
   end
 
+  create_table "bse_best_strategies", force: true do |t|
+    t.string   "stock_name"
+    t.integer  "bse_stock_id"
+    t.integer  "bse_code"
+    t.date     "date"
+    t.float    "last_close"
+    t.integer  "bs_signal"
+    t.integer  "vol_category"
+    t.float    "profit_percent", null: false
+    t.float    "open"
+    t.float    "current_open",   null: false
+    t.float    "high"
+    t.float    "low"
+    t.float    "close"
+    t.float    "target_1"
+    t.float    "stop_loss_1"
+    t.float    "target_2"
+    t.float    "stop_loss_2"
+    t.float    "target_3"
+    t.float    "stop_loss_3"
+    t.integer  "rank"
+    t.integer  "strategy"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "bse_bs_strategies", force: true do |t|
     t.string   "stock_name"
     t.integer  "bse_stock_id"
+    t.integer  "bse_code",     null: false
     t.date     "date"
     t.float    "last_close"
     t.integer  "bs_signal"
@@ -135,6 +162,7 @@ ActiveRecord::Schema.define(version: 20140719053424) do
   create_table "bse_trends", force: true do |t|
     t.integer  "bse_stock_id"
     t.string   "stock_name"
+    t.integer  "bse_code",     null: false
     t.integer  "vol_category"
     t.date     "date"
     t.integer  "d30_t"
@@ -168,6 +196,29 @@ ActiveRecord::Schema.define(version: 20140719053424) do
   end
 
   create_table "examples", force: true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "nse_best_strategies", force: true do |t|
+    t.string   "stock_name"
+    t.integer  "nse_stock_id"
+    t.date     "date"
+    t.float    "last_close"
+    t.integer  "bs_signal"
+    t.integer  "vol_category"
+    t.float    "open"
+    t.float    "high"
+    t.float    "low"
+    t.float    "close"
+    t.float    "target_1"
+    t.float    "stop_loss_1"
+    t.float    "target_2"
+    t.float    "stop_loss_2"
+    t.float    "target_3"
+    t.float    "stop_loss_3"
+    t.integer  "rank"
+    t.integer  "strategy"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

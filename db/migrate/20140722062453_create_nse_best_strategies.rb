@@ -1,9 +1,8 @@
-class CreateBseBsStrategies < ActiveRecord::Migration
+class CreateNseBestStrategies < ActiveRecord::Migration
   def change
-    create_table :bse_bs_strategies do |t|
+    create_table :nse_best_strategies do |t|
     	t.string :stock_name
-    	t.integer :bse_stock_id
-        t.integer :bse_code
+    	t.integer :nse_stock_id
     	t.date :date
     	t.float :last_close
     	t.integer :bs_signal
@@ -20,7 +19,7 @@ class CreateBseBsStrategies < ActiveRecord::Migration
     	t.float :stop_loss_3    	
     	t.integer :rank
     	t.integer :strategy
-    	t.timestamps      
+      	t.timestamps
     end
   end
 end
