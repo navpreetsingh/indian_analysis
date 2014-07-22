@@ -150,27 +150,32 @@ validates :stock_name, uniqueness: true
 	end
 
 	def self.csv_op
-		data_all = BseBsStrategy.where("strategy = 1 AND bs_signal = 1").limit(15)
-		data = [["Name", "Last_close", "Target 1", "Stop Loss 1", "Target 2", "Stop Loss 2", "Target 3", "Stop Loss 3", "Expected Open", "Expected High", "Expected Low", "Expected Close"]]
-		data_all.each do |d|
-			data << [d.stock_name, d.last_close, d.target_1, d.stop_loss_1, d.target_2, d.stop_loss_2, d.target_3, d.stop_loss_3, d.open, d.high, d.low, d.close]
-		end
-		CSV.open("error_files/bse_buyer_strategy.csv", "wb") do |csv|
-			data.each do |d|
-				csv << d
-			end
+		data_b_all = BseBsStrategy.where("strategy = 1 AND bs_signal = 1").limit(15)
+		data_b = [["Name", "Last_close", "Target 1", "Stop Loss 1", "Target 2", "Stop Loss 2", "Target 3", "Stop Loss 3", "Expected Open", "Expected High", "Expected Low", "Expected Close"]]
+		data_b_all.each do |d|
+			data_b << [d.stock_name, d.last_close, d.target_1, d.stop_loss_1, d.target_2, d.stop_loss_2, d.target_3, d.stop_loss_3, d.open, d.high, d.low, d.close]
 		end
 
-		data_all = BseBsStrategy.where("strategy = 1 AND bs_signal = -1").limit(15)
-		data = [["Name", "Last_close", "Target 1", "Stop Loss 1", "Target 2", "Stop Loss 2", "Target 3", "Stop Loss 3", "Expected Open", "Expected High", "Expected Low", "Expected Close"]]
-		data_all.each do |d|
-			data << [d.stock_name, d.last_close, d.target_1, d.stop_loss_1, d.target_2, d.stop_loss_2, d.target_3, d.stop_loss_3, d.open, d.high, d.low, d.close]
+
+		data_s_all = BseBsStrategy.where("strategy = 1 AND bs_signal = -1").limit(15)
+		data_s = [["Name", "Last_close", "Target 1", "Stop Loss 1", "Target 2", "Stop Loss 2", "Target 3", "Stop Loss 3", "Expected Open", "Expected High", "Expected Low", "Expected Close"]]
+		data_s_all.each do |d|
+			data_s << [d.stock_name, d.last_close, d.target_1, d.stop_loss_1, d.target_2, d.stop_loss_2, d.target_3, d.stop_loss_3, d.open, d.high, d.low, d.close]
 		end
-		CSV.open("error_files/bse_seller_strategy.csv", "wb") do |csv|
-			data.each do |d|
+
+		CSV.open("error_files/bse_strategy.csv", "wb") do |csv|
+			csv << ["BUYERS"]
+			data_b.each do |d|
 				csv << d
 			end
-		end
+			csv << [""]
+			csv << [""]
+			csv << [""]
+			csv << ["SELLERS"]
+			data_s.each do |d|
+				csv << d
+			end
+		end		
 	end	
 end
 
