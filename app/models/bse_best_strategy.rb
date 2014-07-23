@@ -95,6 +95,13 @@ class BseBestStrategy < ActiveRecord::Base
 				csv << d
 			end
 
+			csv << [""]
+			csv << [""]
+			csv << [""]
+			csv << [""]
+			csv << [""]
+			csv << [""]
+
 			csv << ["NSE"]
 			csv << ["BUYERS"]
 			datan_b.each do |d|
