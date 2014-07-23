@@ -1,3 +1,4 @@
+
 class BseTrend < ActiveRecord::Base
 	belongs_to :bse_stock
 	validates :date, uniqueness: { scope: :bse_stock_id}
