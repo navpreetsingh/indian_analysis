@@ -4,15 +4,18 @@ class BseBestStrategy < ActiveRecord::Base
 	validates :date, uniqueness: { scope: :bse_stock_id}
 
 	def self.auto 
+		#BseBestStrategy.auto
 		BseBestStrategy.strategy
 		NseBestStrategy.strategy
 		BseBestStrategy.csv_op
 	end
 
 	def self.strategy
-		data = CSV.read("/home/trantor/Downloads/bhav_copy/bse.csv")
+		#data = CSV.read("/home/trantor/Downloads/bhav_copy/bse.csv")
+		data = CSV.read("/home/navpreet/Downloads/bhav_copy/bse.csv")
 		data.delete_at(0)		
-		data1 = CSV.read("/home/trantor/Downloads/bhav_copy/bse1.csv")
+		#data1 = CSV.read("/home/trantor/Downloads/bhav_copy/bse1.csv")
+		data1 = CSV.read("/home/navpreet/Downloads/bhav_copy/bse1.csv")
 		data1.delete_at(0)
 		data1.each {|d| data << d}
 		databs = BseBsStrategy.all
