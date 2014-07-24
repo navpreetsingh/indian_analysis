@@ -10,7 +10,7 @@ class BseDump < ActiveRecord::Base
 		data = CSV.read("/home/trantor/Downloads/bhav_copy/bse_bhav_copy.csv")
 		data.delete_at(0)
 		stocks = BseStock.all
-		s_names = stocks.collect(&:stock_name)
+		s_codes = stocks.collect(&:bse_code)	
 		date = Time.now.strftime("%Y-%m-%d")
 		date1 = Time.now.strftime("%m/%d/%Y")
 		s = 1
@@ -18,8 +18,8 @@ class BseDump < ActiveRecord::Base
 		data.each do |dt|
 			begin
 				if dt[3] == "Q" 				
-					if s_names.include?(dt[1])
-						id = stocks.find_by_stock_name(dt[1]).id					
+					if s_codes.include?(dt[0].to_i)	
+						id = stocks.find_by_bse_code(dt[0]).id					
 						BseDump.create(:bse_stock_id => id,
 							:date => date, :open => dt[4], :high => dt[5], :low => dt[6], :close => dt[7],
 							:volume => dt[11], :no_of_trades => dt[10], :total_turnover => dt[12])

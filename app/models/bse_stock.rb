@@ -10,6 +10,9 @@ class BseStock < ActiveRecord::Base
 	has_one :bse_trends, dependent: :destroy
 	has_many :bse_best_strategies, dependent: :destroy
 
+	validates_uniqueness_of :stock_name
+	validates_uniqueness_of :bse_code
+
 	def self.category
 		ids = BseStock.all
 		dates = BseDump.uniq.pluck(:date).reverse[0..30].sort
