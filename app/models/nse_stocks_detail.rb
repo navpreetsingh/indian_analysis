@@ -5,12 +5,12 @@ class NseStocksDetail < ActiveRecord::Base
 	validates :date, uniqueness: { scope: :nse_stock_id}
 
 	def self.auto
-		# NseStocksDetail.update_imp_data
-		# NseStocksDetail.spread
-		# NseTrend.trend
-		# NseBsStrategy.strategy		
+		NseStocksDetail.update_imp_data
+		NseStocksDetail.spread
+		NseTrend.trend
+		NseBsStrategy.strategy		
 		NseDump.update_data
-		#NseStock.category
+		# NseStock.category
 		# NseStocksDetail.spread_new
 	end
 

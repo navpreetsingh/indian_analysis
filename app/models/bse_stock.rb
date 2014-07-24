@@ -1,4 +1,3 @@
-
 class BseStock < ActiveRecord::Base
 	has_many :bse_stocks_details, dependent: :destroy
 	has_many :bse_dumps, dependent: :destroy
