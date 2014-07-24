@@ -4,7 +4,8 @@ class NseBestStrategy < ActiveRecord::Base
 	validates :date, uniqueness: { scope: :nse_stock_id}
 
 	def self.strategy
-		data = CSV.read("/home/trantor/Downloads/bhav_copy/nse.csv")
+		#data = CSV.read("/home/trantor/Downloads/bhav_copy/nse.csv")
+		data = CSV.read("/home/navpreet/Downloads/bhav_copy/nse.csv")
 		data.delete_at(0)		
 		datans = NseBsStrategy.all
 		rank_b = 1
