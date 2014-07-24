@@ -6,8 +6,8 @@ class BseStocksDetail < ActiveRecord::Base
 	validates :date, uniqueness: { scope: :bse_stock_id}
 
 	def self.auto
-		# BseStocksDetail.update_imp_data
-		# BseStocksDetail.spread
+		BseStocksDetail.update_imp_data
+		BseStocksDetail.spread
 		BseTrend.trend
 		BseBsStrategy.strategy
 		BseBsStrategy.csv_op
