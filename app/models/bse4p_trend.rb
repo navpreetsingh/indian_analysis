@@ -5,7 +5,7 @@ class Bse4pTrend < ActiveRecord::Base
 	def self.auto
 		Bse4pTrend.trend
 		Bse4BsStrategy.strategy
-		StrategyAnalysis.analysis
+		#StrategyAnalysis.analysis
 	end
 
 	def self.trend

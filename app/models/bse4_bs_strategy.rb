@@ -102,8 +102,8 @@ class Bse4BsStrategy < ActiveRecord::Base
 						# end
 						st = 40 + stp
 						st = 10 + stp if d.d3_t == 3
-						st = 2 + stp if d.d3_t == 1 and d.d7_t > 0
-						st = 3 + stp if d.d3_t == -1 and d.d7_t > 0 and d.d15_t > 0
+						st = 20 + stp if d.d3_t == 1 and d.d7_t > 0 and d.bs_signal = 1
+						st = 30 + stp if d.d3_t == -1 and d.d7_t > 0 and d.d15_t > 0 and d.bs_signal = 1
 						Bse4BsStrategy.create(:stock_name => d.stock_name, :bse_stock_id => d.bse_stock_id,
 							:date => d.date, :executed_date => new_d.date, :last_close => d.last_close,
 							:bs_signal => 1, :open => new_d.open, :high => new_d.high, 
@@ -131,6 +131,7 @@ class Bse4BsStrategy < ActiveRecord::Base
 							stop_loss2 = d.last_close * 0.99
 							target3 = d.last_close * 0.95
 							stop_loss3 = d.last_close * 0.97
+							stp = 1
 						elsif d.avg_high > 0 and d.avg_high < 1
 							target1 = d.last_close * 0.98
 							stop_loss1 = d.last_close * (1 + ((d.avg_high * 1.25)/100))
@@ -138,6 +139,7 @@ class Bse4BsStrategy < ActiveRecord::Base
 							stop_loss2 = d.last_close 
 							target3 = d.last_close * 0.95
 							stop_loss3 = d.last_close * 0.975
+							stp = 3
 						else
 							target1 = d.last_close * 0.98
 							stop_loss1 = d.last_close * (1 + ((d.avg_high)/100))
@@ -145,6 +147,7 @@ class Bse4BsStrategy < ActiveRecord::Base
 							stop_loss2 = d.last_close 
 							target3 = d.last_close * 0.95
 							stop_loss3 = d.last_close * 0.98
+							stp = 5
 						end
 					else
 						if d.avg_high < 0
@@ -155,6 +158,7 @@ class Bse4BsStrategy < ActiveRecord::Base
 							stop_loss2 = d.last_close * (1 - ((d.avg_high)/100))
 							target3 = d.last_close * (1 + ((d.avg_low * 0.5)/100))
 							stop_loss3 = d.last_close * (1 - ((d.avg_high * 1.25)/100))
+							stp = 2
 						elsif d.avg_high > 0 and d.avg_high < 1
 							target1 = d.last_close * (1 + ((d.avg_low * 0.25)/100))
 							stop_loss1 = d.last_close * (1 + ((d.avg_high * 1.25)/100))
@@ -162,6 +166,7 @@ class Bse4BsStrategy < ActiveRecord::Base
 							stop_loss2 = d.last_close  
 							target3 = d.last_close * (1 + ((d.avg_low * 0.5)/100))
 							stop_loss3 = d.last_close * (1 - ((d.avg_high * 0.2)/100))
+							stp = 4
 						else
 							target1 = d.last_close * (1 + ((d.avg_low * 0.25)/100))
 							stop_loss1 = d.last_close * (1 + ((d.avg_high)/100))
@@ -169,12 +174,13 @@ class Bse4BsStrategy < ActiveRecord::Base
 							stop_loss2 = d.last_close * (1 + ((d.avg_high * 0.25)/100))
 							target3 = d.last_close * (1 + ((d.avg_low * 0.5)/100))
 							stop_loss3 = d.last_close * (1 - ((d.avg_high * 0.25)/100))
+							stp = 6
 						end
 					end
-					st = 4
-					st = 1 if d.d3_t == -3
-					st = 2 if d.d3_t == -1 and d.d7_t < 0
-					st = 3 if d.d3_t == 1 and d.d7_t < 0 and d.d15_t < 0
+					st = 40 + stp
+					st = 10 + stp if d.d3_t == -3 
+					st = 20 + stp if d.d3_t == -1 and d.d7_t < 0 and d.bs_signal = -1
+					st = 30 + stp if d.d3_t == 1 and d.d7_t < 0 and d.d15_t < 0 and d.bs_signal = -1
 					new_d =  BseStocksDetail.where("bse_stock_id = ? AND date > ?", d.bse_stock_id, d.date).first
 					unless new_d.nil?
 						shares_bought = (10000 / new_d.open).to_i
