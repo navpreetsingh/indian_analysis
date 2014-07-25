@@ -23,7 +23,7 @@ class StrategyAnalysis < ActiveRecord::Base
 
 		for i in 1..4
 			for j in 1..6
-				d = data.where("bs_signal = -1 and strategy = ?", i)
+				d = data.where("bs_signal = -1 and strategy = ?", (i*10) + j)
 				total = d.count
 				if total > 0
 					pl = d.collect(&:profit_loss).sum

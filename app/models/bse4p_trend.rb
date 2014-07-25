@@ -5,7 +5,7 @@ class Bse4pTrend < ActiveRecord::Base
 	def self.auto
 		Bse4pTrend.trend
 		Bse4BsStrategy.strategy
-		#StrategyAnalysis.analysis
+		StrategyAnalysis.analysis
 	end
 
 	def self.trend
@@ -49,9 +49,9 @@ class Bse4pTrend < ActiveRecord::Base
 					avg_hh = data.collect(&:ch_diff)[cc..cc+29]
 					avg_ll = data.collect(&:cl_diff)[cc..cc+29]
 					avg_cc = data.collect(&:cc_diff)[cc..cc+29]
-					avg_h = avg_hh[0..30/(2**3) - 1].sum / 3
-					avg_l = avg_ll[0..30/(2**3) - 1].sum / 3
-					avg_c = avg_cc[0..30/(2**3) - 1].sum / 3
+					avg_h = (avg_hh[0] * 0.5) + (avg_hh[1] * 0.334) + (avg_hh[2] * 0.2) 
+					avg_l = (avg_ll[0] * 0.5) + (avg_ll[1] * 0.334) + (avg_ll[2] * 0.2) 
+					avg_c = (avg_cc[0] * 0.5) + (avg_cc[1] * 0.334) + (avg_cc[2] * 0.2) 					
 
 					Bse4pTrend.create(:bse_stock_id => stock.id, :stock_name => stock.stock_name,
 						 :date => date,
