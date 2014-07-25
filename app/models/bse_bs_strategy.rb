@@ -163,7 +163,7 @@ validates :stock_name, uniqueness: true
 		data.each do |dd|
 			datab_s_all = BseBsStrategy.where("strategy = ? AND bs_signal = -1", dd[0]).limit(dd[1])		
 			datab_s_all.each do |d|
-				datab_s << [d.stock_name, d.last_close, d.target_1, d.stop_loss_1, d.target_2, d.stop_loss_2, d.target_3, d.stop_loss_3, d.open, d.high, d.low, d.close]
+				datab_s << [d.stock_name, d.bse_code, d.last_close, d.target_1, d.stop_loss_1, d.target_2, d.stop_loss_2, d.target_3, d.stop_loss_3, d.open, d.high, d.low, d.close]
 			end
 		end
 
@@ -178,7 +178,7 @@ validates :stock_name, uniqueness: true
 
 		datan_s = [["Name", "Last_close", "Target 1", "Stop Loss 1", "Target 2", "Stop Loss 2", "Target 3", "Stop Loss 3", "Expected Open", "Expected High", "Expected Low", "Expected Close"]]
 		data.each do |dd|
-			datan_s_all = NseBsStrategy.where("strategy = 1 AND bs_signal = -1").limit(15)
+			datan_s_all = NseBsStrategy.where("strategy = ? AND bs_signal = -1", dd[0]).limit(dd[1])
 			datan_s_all.each do |d|
 				datan_s << [d.stock_name, d.last_close, d.target_1, d.stop_loss_1, d.target_2, d.stop_loss_2, d.target_3, d.stop_loss_3, d.open, d.high, d.low, d.close]
 			end
