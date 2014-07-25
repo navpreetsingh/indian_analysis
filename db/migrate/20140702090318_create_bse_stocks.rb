@@ -5,6 +5,7 @@ class CreateBseStocks < ActiveRecord::Migration
       t.integer :vol_category     
       t.integer :price_category 
       t.integer :bse_code
+      t.integer :useless_stock
     end
   end
 end

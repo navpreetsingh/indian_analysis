@@ -161,6 +161,7 @@ ActiveRecord::Schema.define(version: 20140722120831) do
     t.integer "vol_category"
     t.integer "price_category"
     t.integer "bse_code",       default: 0, null: false
+    t.integer "useless_stock"
   end
 
   create_table "bse_stocks_details", force: true do |t|
@@ -231,7 +232,9 @@ ActiveRecord::Schema.define(version: 20140722120831) do
     t.float    "last_close"
     t.integer  "bs_signal"
     t.integer  "vol_category"
+    t.float    "profit_percent"
     t.float    "open"
+    t.float    "current_open"
     t.float    "high"
     t.float    "low"
     t.float    "close"
@@ -285,6 +288,7 @@ ActiveRecord::Schema.define(version: 20140722120831) do
     t.string  "stock_name"
     t.integer "vol_category"
     t.integer "price_category"
+    t.integer "useless_stock"
   end
 
   create_table "nse_stocks_details", force: true do |t|

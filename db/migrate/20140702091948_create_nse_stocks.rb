@@ -4,6 +4,7 @@ class CreateNseStocks < ActiveRecord::Migration
       t.string :stock_name
       t.integer :vol_category   
       t.integer :price_category   
+      t.integer :useless_stock
     end
   end
 end
