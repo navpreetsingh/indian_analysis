@@ -4,8 +4,8 @@ class NseBestStrategy < ActiveRecord::Base
 	validates :date, uniqueness: { scope: :nse_stock_id}
 
 	def self.strategy
-		#data = CSV.read("/home/trantor/Downloads/bhav_copy/nse.csv")
-		data = CSV.read("/home/navpreet/Downloads/bhav_copy/nse.csv")
+		data = CSV.read("/home/trantor/Downloads/bhav_copy/nse.csv")
+		#data = CSV.read("/home/navpreet/Downloads/bhav_copy/nse.csv")
 		data.delete_at(0)		
 		datans = NseBsStrategy.all
 		rank_b = 1
@@ -26,7 +26,8 @@ class NseBestStrategy < ActiveRecord::Base
 							:target_1 => nd.open, :stop_loss_1 => c_open * 1.01,
 							:target_2 => nd.low, :stop_loss_2 => c_open.to_i,
 							:target_3 => nd.low * 0.98, :stop_loss_3 => nd.open,
-							:rank => rank_s, :strategy => 5)
+							:rank => rank_s, :strategy => nd.strategy,
+							:predicted_signal => nd.bs_signal)
 						rank_s += 1
 					elsif c_open != 0 and c_open < nd.low		
 					#debugger			
@@ -40,7 +41,8 @@ class NseBestStrategy < ActiveRecord::Base
 							:target_1 => nd.open, :stop_loss_1 => c_open * 0.99,
 							:target_2 => nd.high, :stop_loss_2 => c_open.to_i,
 							:target_3 => nd.high * 1.02, :stop_loss_3 => nd.open,
-							:rank => rank_b, :strategy => 5)
+							:rank => rank_b, :strategy => nd.strategy,
+							:predicted_signal => nd.bs_signal)
 						rank_b += 1
 					end
 				end

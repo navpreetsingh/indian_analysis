@@ -21,6 +21,7 @@ class CreateNseBestStrategies < ActiveRecord::Migration
     	t.float :stop_loss_3    	
     	t.integer :rank
     	t.integer :strategy
+        t.integer :predicted_signal
       	t.timestamps
     end
   end

@@ -18,6 +18,7 @@ validates :stock_name, uniqueness: true
 						stop_loss2 = d.last_close * 1.01
 						target3 = d.last_close * 1.05
 						stop_loss3 = d.last_close * 1.03
+						stp = 1
 					elsif d.avg_low < 0 and d.avg_low > -1
 						target1 = d.last_close * 1.02
 						stop_loss1 = d.last_close * (1 + ((d.avg_low * 1.25)/100))
@@ -25,6 +26,7 @@ validates :stock_name, uniqueness: true
 						stop_loss2 = d.last_close 
 						target3 = d.last_close * 1.05
 						stop_loss3 = d.last_close * 1.025
+						stp = 3
 					else
 						target1 = d.last_close * 1.02
 						stop_loss1 = d.last_close * (1 + ((d.avg_low)/100))
@@ -32,6 +34,7 @@ validates :stock_name, uniqueness: true
 						stop_loss2 = d.last_close 
 						target3 = d.last_close * 1.05
 						stop_loss3 = d.last_close * 1.02
+						stp = 5
 					end
 				else
 					if d.avg_low > 0
@@ -42,6 +45,7 @@ validates :stock_name, uniqueness: true
 						stop_loss2 = d.last_close * (1 + ((d.avg_low)/100))
 						target3 = d.last_close * (1 + ((d.avg_high * 0.5)/100))
 						stop_loss3 = d.last_close * (1 + ((d.avg_low * 1.25)/100))
+						stp = 2
 					elsif d.avg_low < 0 and d.avg_low > -1
 						target1 = d.last_close * (1 + ((d.avg_high * 0.25)/100))
 						stop_loss1 = d.last_close * (1 + ((d.avg_low * 1.25)/100))
@@ -49,6 +53,7 @@ validates :stock_name, uniqueness: true
 						stop_loss2 = d.last_close  
 						target3 = d.last_close * (1 + ((d.avg_high * 0.5)/100))
 						stop_loss3 = d.last_close * (1 - ((d.avg_low * 0.2)/100))
+						stp = 4
 					else
 						target1 = d.last_close * (1 + ((d.avg_high * 0.25)/100))
 						stop_loss1 = d.last_close * (1 + ((d.avg_low)/100))
@@ -56,12 +61,13 @@ validates :stock_name, uniqueness: true
 						stop_loss2 = d.last_close * (1 + ((d.avg_low * 0.25)/100))
 						target3 = d.last_close * (1 + ((d.avg_high * 0.5)/100))
 						stop_loss3 = d.last_close * (1 - ((d.avg_low * 0.25)/100))
+						stp = 6
 					end
 				end
-				st = 4
-				st = 1 if d.d3_t == 3
-				st = 2 if d.d3_t == 1 and d.d7_t > 0
-				st = 3 if d.d3_t == -1 and d.d7_t > 0 and d.d15_t > 0
+				st = 40 + stp
+				st = 10 + stp if d.d3_t == 3
+				st = 20 + stp if d.d3_t == 1 and d.d7_t > 0 and d.bs_signal = 1
+				st = 30 + stp if d.d3_t == -1 and d.d7_t > 0 and d.d15_t > 0 and d.bs_signal = 1
 				NseBsStrategy.create(:stock_name => d.stock_name, :nse_stock_id => d.nse_stock_id,
 					:date => d.date, :vol_category => d.vol_category, :last_close => d.last_close,
 					:bs_signal => 1, :open => (d.last_close * ( 1 + (d.avg_open / 100))), 
@@ -90,6 +96,7 @@ validates :stock_name, uniqueness: true
 						stop_loss2 = d.last_close * 0.99
 						target3 = d.last_close * 0.95
 						stop_loss3 = d.last_close * 0.97
+						stp = 1
 					elsif d.avg_high > 0 and d.avg_high < 1
 						target1 = d.last_close * 0.98
 						stop_loss1 = d.last_close * (1 + ((d.avg_high * 1.25)/100))
@@ -97,6 +104,7 @@ validates :stock_name, uniqueness: true
 						stop_loss2 = d.last_close 
 						target3 = d.last_close * 0.95
 						stop_loss3 = d.last_close * 0.975
+						stp = 3
 					else
 						target1 = d.last_close * 0.98
 						stop_loss1 = d.last_close * (1 + ((d.avg_high)/100))
@@ -104,6 +112,7 @@ validates :stock_name, uniqueness: true
 						stop_loss2 = d.last_close 
 						target3 = d.last_close * 0.95
 						stop_loss3 = d.last_close * 0.98
+						stp = 5
 					end
 				else
 					if d.avg_high < 0
@@ -114,6 +123,7 @@ validates :stock_name, uniqueness: true
 						stop_loss2 = d.last_close * (1 - ((d.avg_high)/100))
 						target3 = d.last_close * (1 + ((d.avg_low * 0.5)/100))
 						stop_loss3 = d.last_close * (1 - ((d.avg_high * 1.25)/100))
+						stp = 2
 					elsif d.avg_high > 0 and d.avg_high < 1
 						target1 = d.last_close * (1 + ((d.avg_low * 0.25)/100))
 						stop_loss1 = d.last_close * (1 + ((d.avg_high * 1.25)/100))
@@ -121,6 +131,7 @@ validates :stock_name, uniqueness: true
 						stop_loss2 = d.last_close  
 						target3 = d.last_close * (1 + ((d.avg_low * 0.5)/100))
 						stop_loss3 = d.last_close * (1 - ((d.avg_high * 0.2)/100))
+						stp = 4
 					else
 						target1 = d.last_close * (1 + ((d.avg_low * 0.25)/100))
 						stop_loss1 = d.last_close * (1 + ((d.avg_high)/100))
@@ -128,12 +139,13 @@ validates :stock_name, uniqueness: true
 						stop_loss2 = d.last_close * (1 + ((d.avg_high * 0.25)/100))
 						target3 = d.last_close * (1 + ((d.avg_low * 0.5)/100))
 						stop_loss3 = d.last_close * (1 - ((d.avg_high * 0.25)/100))
+						stp = 6
 					end
 				end
-				st = 4
-				st = 1 if d.d3_t == -3
-				st = 2 if d.d3_t == -1 and d.d7_t < 0
-				st = 3 if d.d3_t == 1 and d.d7_t < 0 and d.d15_t < 0
+				st = 40 + stp
+				st = 10 + stp if d.d3_t == -3
+				st = 20 + stp if d.d3_t == -1 and d.d7_t < 0 and d.bs_signal = -1
+				st = 30 + stp if d.d3_t == 1 and d.d7_t < 0 and d.d15_t < 0 and d.bs_signal = -1
 				NseBsStrategy.create(:stock_name => d.stock_name, :nse_stock_id => d.nse_stock_id,
 					:date => d.date, :vol_category => d.vol_category, :last_close => d.last_close,
 					:bs_signal => -1, :open => (d.last_close * ( 1 + (d.avg_open / 100))), 

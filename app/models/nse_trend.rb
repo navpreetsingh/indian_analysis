@@ -35,12 +35,17 @@ class NseTrend < ActiveRecord::Base
 						data_chi << data_c[0..30/(2**i) - 1].index(data_c[0..30/(2**i) - 1].max) + 1
 						data_cli << data_c[0..30/(2**i) - 1].index(data_c[0..30/(2**i) - 1].min) + 1		
 					end
-
+					#debugger
+					data_ao = data.collect(&:lco_diff)
+					data_ah = data.collect(&:ch_diff)
+					data_al = data.collect(&:cl_diff)
+					data_ac = data.collect(&:cc_diff)
+					#debugger
 					#taking averages
-					avg_o = data.collect(&:lco_diff)[0..30/(2**3) - 1].sum / 3
-					avg_h = data.collect(&:ch_diff)[0..30/(2**3) - 1].sum / 3
-					avg_l = data.collect(&:cl_diff)[0..30/(2**3) - 1].sum / 3
-					avg_c = data.collect(&:cc_diff)[0..30/(2**3) - 1].sum / 3
+					avg_o = (data_ao[0] * 0.5) + (data_ao[1] * 0.334) + (data_ao[2] * 0.2)
+					avg_h = (data_ah[0] * 0.5) + (data_ah[1] * 0.334) + (data_ah[2] * 0.2)
+					avg_l = (data_al[0] * 0.5) + (data_al[1] * 0.334) + (data_al[2] * 0.2)
+					avg_c = (data_ac[0] * 0.5) + (data_ac[1] * 0.334) + (data_ac[2] * 0.2)
 
 					NseTrend.create(:nse_stock_id => stock.id, :stock_name => stock.stock_name,
 						:date => data[0].date, :vol_category => stock.vol_category,

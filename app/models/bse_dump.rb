@@ -17,7 +17,7 @@ class BseDump < ActiveRecord::Base
 		file = File.new("error_files/BseDump", "w+")
 		data.each do |dt|
 			begin
-				if dt[3] == "Q" 				
+				if dt[3] == "Q" and dt[0].to_i == 526483				
 					if s_codes.include?(dt[0].to_i)	
 						id = stocks.find_by_bse_code(dt[0]).id					
 						BseDump.create(:bse_stock_id => id,

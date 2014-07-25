@@ -8,8 +8,7 @@ class BseStock < ActiveRecord::Base
 	has_many :bse_bs_strategies, dependent: :destroy
 	has_one :bse_trends, dependent: :destroy
 	has_many :bse_best_strategies, dependent: :destroy
-
-	validates_uniqueness_of :stock_name
+	
 	validates_uniqueness_of :bse_code
 
 	def self.category
