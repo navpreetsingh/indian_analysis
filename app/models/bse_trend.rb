@@ -6,7 +6,8 @@ class BseTrend < ActiveRecord::Base
 	def self.trend
 		ids = BseStock.where("vol_category >= 3")
 		file = File.new("Bse_Trend", "w+")
-		date = Date.today
+		date = date = BseStocksDetail.uniq.pluck(:date).sort.last
+		#date = Date.today
 		#date = Date.yesterday
 		ids.each do |stock|	
 			begin	
@@ -33,9 +34,9 @@ class BseTrend < ActiveRecord::Base
 					end
 
 					data_ao = data.collect(&:lco_diff)
-					data_ah = data.collect(&:ch_diff)
-					data_al = data.collect(&:cl_diff)
-					data_ac = data.collect(&:cc_diff)
+					data_ah = data.collect(&:oh_diff)
+					data_al = data.collect(&:ol_diff)
+					data_ac = data.collect(&:oc_diff)
 					
 					#taking averages
 					avg_o = (data_ao[0] * 0.5) + (data_ao[1] * 0.334) + (data_ao[2] * 0.2)

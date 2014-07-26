@@ -8,6 +8,7 @@ class CreateBseBsStrategies < ActiveRecord::Migration
     	t.float :last_close
     	t.integer :bs_signal
     	t.integer :vol_category
+        t.float :profit_percent
     	t.float :open
         t.float :high
         t.float :low

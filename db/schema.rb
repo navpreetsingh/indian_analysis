@@ -92,6 +92,7 @@ ActiveRecord::Schema.define(version: 20140722120831) do
     t.float    "stop_loss_3"
     t.integer  "rank"
     t.integer  "strategy"
+    t.integer  "predicted_signal"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -123,11 +124,12 @@ ActiveRecord::Schema.define(version: 20140722120831) do
   create_table "bse_bs_strategies", force: true do |t|
     t.string   "stock_name"
     t.integer  "bse_stock_id"
-    t.integer  "bse_code",     null: false
+    t.integer  "bse_code",       null: false
     t.date     "date"
     t.float    "last_close"
     t.integer  "bs_signal"
     t.integer  "vol_category"
+    t.float    "profit_percent"
     t.float    "open"
     t.float    "high"
     t.float    "low"
@@ -246,6 +248,7 @@ ActiveRecord::Schema.define(version: 20140722120831) do
     t.float    "stop_loss_3"
     t.integer  "rank"
     t.integer  "strategy"
+    t.integer  "predicted_signal"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
