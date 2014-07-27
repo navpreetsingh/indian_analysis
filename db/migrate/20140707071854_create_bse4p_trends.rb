@@ -31,6 +31,7 @@ class CreateBse4pTrends < ActiveRecord::Migration
       t.integer :bs_signal
       t.float :last_close
       
+      t.float :avg_open
       t.float :avg_high
       t.float :avg_low
       t.float :avg_close
