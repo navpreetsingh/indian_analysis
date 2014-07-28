@@ -15,10 +15,10 @@ class Bse4pTrend < ActiveRecord::Base
 		
 		ids = BseStock.where("vol_category >= 3")
 		t = Time.now.strftime("%Y-%m-%d")
-		file = File.new("Bse_testing_trend", "w+")
+		file = File.new("/error_files/Bse_testing_trend", "w+")
 		ids.each do |stock|		
 			begin	
-				data = BseStocksDetail.where("bse_stock_id = ? and date <= ?", stock.id, t).order("date DESC").limit(40)
+				data = BseStocksDetail.where("bse_stock_id = ? and date <= ?", stock.id, t).order("date DESC").limit(31)
 				data_tt = data.collect(&:bs_signal)
 				data_hh = data.collect(&:high)
 				data_ll = data.collect(&:low)
