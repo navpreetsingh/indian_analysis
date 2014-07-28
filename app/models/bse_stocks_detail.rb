@@ -19,7 +19,7 @@ class BseStocksDetail < ActiveRecord::Base
 
 	def self.spread
 		ids = BseStock.where("vol_category >= 3").collect(&:id)	
-		file = File.new("Bse_spread", "w+")			
+		file = File.new("error_files/Bse_spread", "w+")			
 		ids.each do |stock|
 			begin
 				data = BseStocksDetail.where("bse_stock_id = ?", stock).order("date DESC").limit(2)
@@ -44,7 +44,7 @@ class BseStocksDetail < ActiveRecord::Base
 
 	def self.spread_new
 		ids = BseStock.where("vol_category >= 3").collect(&:id)	
-		file = File.new("Bse_spread_new", "w+")			
+		file = File.new("error_files/Bse_spread_new", "w+")			
 		ids.each do |stock|
 			begin
 				data = BseStocksDetail.where("bse_stock_id = ?", stock).order("date DESC")
@@ -77,7 +77,7 @@ class BseStocksDetail < ActiveRecord::Base
 		stocks = BseStock.where("vol_category >= 3")
 		s_codes = stocks.collect(&:bse_code)		
 		date = Time.now.strftime("%Y-%m-%d")
-		file = File.new("Bse_imp_data", "w+")		
+		file = File.new("error_files/Bse_imp_data", "w+")		
 		data.each do |d|
 			begin				
 				#debugger

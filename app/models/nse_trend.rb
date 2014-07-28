@@ -6,7 +6,7 @@ class NseTrend < ActiveRecord::Base
 		# Run below 2 commands before calling this function
 		# rake db:migrate:down VERSION=20140705140950
 		# rake db:migrate:down VERSION=20140705140950
-		file = File.new("Nse_Trend", "w+")
+		file = File.new("error_files/Nse_Trend", "w+")
 		NseTrend.destroy_all
 		ids = NseStock.where("vol_category >= 3")
 		date = Date.today

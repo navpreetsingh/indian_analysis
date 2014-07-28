@@ -16,7 +16,7 @@ class NseStocksDetail < ActiveRecord::Base
 
 	def self.spread		
 		ids = NseStock.where("vol_category >= 3").collect(&:id)
-		file = File.new("Nse_spread", "w+")			
+		file = File.new("error_files/Nse_spread", "w+")			
 		ids.each do |stock|
 			begin
 
@@ -41,7 +41,7 @@ class NseStocksDetail < ActiveRecord::Base
 
 	def self.spread_new		
 		ids = NseStock.where("vol_category >= 3").collect(&:id)
-		file = File.new("Nse_spread_new", "w+")			
+		file = File.new("error_files/Nse_spread_new", "w+")			
 		ids.each do |stock|
 			begin
 				data = NseStocksDetail.where("nse_stock_id = ?", stock).order("date DESC")
@@ -75,7 +75,7 @@ class NseStocksDetail < ActiveRecord::Base
 		s_names = stocks.collect(&:stock_name)
 		date = Time.now.strftime("%Y-%m-%d")
 		#date = "2014-07-16"
-		file = File.new("Nse_imp_data", "w+")		
+		file = File.new("error_files/Nse_imp_data", "w+")		
 		data.each do |d|
 			begin				
 				if s_names.include?(d[0])					

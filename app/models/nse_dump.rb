@@ -13,7 +13,7 @@ class NseDump < ActiveRecord::Base
 		s_names = stocks.collect(&:stock_name)
 		date = Time.now.strftime("%Y-%m-%d")
 		date1 = Time.now.strftime("%d-%b-%Y")
-		file = File.new("NseDump", "w+")
+		file = File.new("error_files/NseDump", "w+")
 		data.each do |d|
 			begin				 
 				if s_names.include?(d[0])
