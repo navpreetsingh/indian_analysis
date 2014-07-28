@@ -6,7 +6,7 @@ class BseTrend < ActiveRecord::Base
 	def self.trend
 		ids = BseStock.where("vol_category >= 3")
 		file = File.new("Bse_Trend", "w+")
-		date = date = BseStocksDetail.uniq.pluck(:date).sort.last
+		date = BseStocksDetail.uniq.pluck(:date).sort.last
 		#date = Date.today
 		#date = Date.yesterday
 		ids.each do |stock|	

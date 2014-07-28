@@ -189,39 +189,81 @@ validates :stock_name, uniqueness: true
 	end
 
 	def self.csv_op
-		data = [11, 13, 15, 21, 23, 25, 31, 33, 35, ]
-		datab_b = [["Name", "BSE Code" , "Last_close", "Target 1", "Stop Loss 1", "Target 2", "Stop Loss 2", "Target 3", "Stop Loss 3", "Expected Open", "Expected High", "Expected Low", "Expected Close", "Strategy"]]
-		data.each do |dd|
-			datab_b_all = BseBsStrategy.where("strategy = ? AND bs_signal = 1", dd)
-			datab_b_all.each do |d|
-				datab_b << [d.stock_name, d.bse_code, d.last_close, d.target_1, d.stop_loss_1, d.target_2, d.stop_loss_2, d.target_3, d.stop_loss_3, d.open, d.high, d.low, d.close, d.strategy]
+		data = [111, 113, 115, 117, 112, 
+				121, 123, 125, 127, 122,
+				131, 133, 135, 137, 132,
+				141, 143, 145, 147, 142,
+				151, 153, 155, 157, 152,
+				211, 213, 215, 217, 212,
+				221, 223, 225, 227, 222, 
+				231, 233, 235, 237, 232, 
+				241, 243, 245, 247, 242,
+				251, 253, 255, 257, 252,
+				311, 313, 315, 317, 312, 
+				321, 323, 325, 327, 322, 
+				331, 333, 335, 337, 332, 
+				341, 343, 345, 347, 342, 
+				351, 353, 355, 357, 352,
+				411, 413, 415, 417, 412, 
+				421, 423, 425, 427, 422]
+
+		datab_b = [["Name", "BSE Code" , "Profit Percent", "Last_close", "Target 1", "Stop Loss 1", "Target 2", "Stop Loss 2", "Target 3", "Stop Loss 3", "Expected Open", "Expected High", "Expected Low", "Expected Close", "Strategy"]]
+		datab_b_all = BseBsStrategy.where("bs_signal = 1").order("profit_percent desc").limit(10)
+		datab_b_all.each do |d|
+			if data.include?(d.strategy)
+				if d.strategy % 10 == 7 
+					datab_b << [d.stock_name, d.bse_code, d.profit_percent, d.last_close, d.target_1, d.stop_loss_1, d.target_2, d.stop_loss_2, d.target_3, d.stop_loss_3, d.open, d.high, d.low, d.close, d.strategy] if d.profit_percent >= 10
+				elsif d.strategy % 10 == 2
+					datab_b << [d.stock_name, d.bse_code, d.profit_percent, d.last_close, d.target_1, d.stop_loss_1, d.target_2, d.stop_loss_2, d.target_3, d.stop_loss_3, d.open, d.high, d.low, d.close, d.strategy] if d.profit_percent >= 2
+				elsif d.strategy % 10 != 7 and d.strategy % 10 != 2
+					datab_b << [d.stock_name, d.bse_code, d.profit_percent, d.last_close, d.target_1, d.stop_loss_1, d.target_2, d.stop_loss_2, d.target_3, d.stop_loss_3, d.open, d.high, d.low, d.close, d.strategy]
+				end
+			end		
+		end		
+
+		datab_s = [["Name", "BSE Code" , "Profit Percent", "Last_close", "Target 1", "Stop Loss 1", "Target 2", "Stop Loss 2", "Target 3", "Stop Loss 3", "Expected Open", "Expected High", "Expected Low", "Expected Close", "Strategy"]]
+		
+		datab_s_all = BseBsStrategy.where("bs_signal = -1").order("profit_percent asc").limit(10)
+		datab_s_all.each do |d|
+			if data.include?(d.strategy)
+				if d.strategy % 10 == 7
+					datab_s << [d.stock_name, d.bse_code, d.profit_percent, d.last_close, d.target_1, d.stop_loss_1, d.target_2, d.stop_loss_2, d.target_3, d.stop_loss_3, d.open, d.high, d.low, d.close, d.strategy] if d.profit_percent <= -10
+				elsif d.strategy % 10 == 2
+					datab_s << [d.stock_name, d.bse_code, d.profit_percent, d.last_close, d.target_1, d.stop_loss_1, d.target_2, d.stop_loss_2, d.target_3, d.stop_loss_3, d.open, d.high, d.low, d.close, d.strategy] if d.profit_percent <= -2
+				elsif d.strategy % 10 != 7 and d.strategy % 10 != 2
+					datab_s << [d.stock_name, d.bse_code, d.profit_percent, d.last_close, d.target_1, d.stop_loss_1, d.target_2, d.stop_loss_2, d.target_3, d.stop_loss_3, d.open, d.high, d.low, d.close, d.strategy]
+				end
+			end
+		end	
+		
+		datan_b = [["Name", "Profit Percent", "Last_close", "Target 1", "Stop Loss 1", "Target 2", "Stop Loss 2", "Target 3", "Stop Loss 3", "Expected Open", "Expected High", "Expected Low", "Expected Close", "Strategy"]]
+		datan_b_all = NseBsStrategy.where("bs_signal = 1").order("profit_percent desc").limit(10)
+		datan_b_all.each do |d|
+			if data.include?(d.strategy)
+				if d.strategy % 10 == 7
+					datan_b << [d.stock_name, d.profit_percent, d.last_close, d.target_1, d.stop_loss_1, d.target_2, d.stop_loss_2, d.target_3, d.stop_loss_3, d.open, d.high, d.low, d.close, d.strategy] if d.profit_percent >= 10
+				elsif d.strategy % 10 == 2
+					datan_b << [d.stock_name, d.profit_percent, d.last_close, d.target_1, d.stop_loss_1, d.target_2, d.stop_loss_2, d.target_3, d.stop_loss_3, d.open, d.high, d.low, d.close, d.strategy] if d.profit_percent >= 2
+				elsif d.strategy % 10 != 7 and d.strategy % 10 != 2
+					datan_b << [d.stock_name, d.profit_percent, d.last_close, d.target_1, d.stop_loss_1, d.target_2, d.stop_loss_2, d.target_3, d.stop_loss_3, d.open, d.high, d.low, d.close, d.strategy] 
+				end
 			end
 		end
-
-		datab_s = [["Name", "BSE Code" , "Last_close", "Target 1", "Stop Loss 1", "Target 2", "Stop Loss 2", "Target 3", "Stop Loss 3", "Expected Open", "Expected High", "Expected Low", "Expected Close", "Strategy"]]
-		data.each do |dd|
-			datab_s_all = BseBsStrategy.where("strategy = ? AND bs_signal = -1", dd)
-			datab_s_all.each do |d|
-				datab_s << [d.stock_name, d.bse_code, d.last_close, d.target_1, d.stop_loss_1, d.target_2, d.stop_loss_2, d.target_3, d.stop_loss_3, d.open, d.high, d.low, d.close, d.strategy]
+		
+		datan_s = [["Name", "Profit Percent", "Last_close", "Target 1", "Stop Loss 1", "Target 2", "Stop Loss 2", "Target 3", "Stop Loss 3", "Expected Open", "Expected High", "Expected Low", "Expected Close", "Strategy"]]
+		datan_s_all = NseBsStrategy.where("bs_signal = -1").order("profit_percent asc").limit(10)
+		datan_s_all.each do |d|
+			if data.include?(d.strategy)
+				if d.strategy % 10 == 7
+					datan_s << [d.stock_name, d.profit_percent, d.last_close, d.target_1, d.stop_loss_1, d.target_2, d.stop_loss_2, d.target_3, d.stop_loss_3, d.open, d.high, d.low, d.close, d.strategy] if d.profit_percent <= -10
+				elsif d.strategy % 10 == 2
+					datan_s << [d.stock_name, d.profit_percent, d.last_close, d.target_1, d.stop_loss_1, d.target_2, d.stop_loss_2, d.target_3, d.stop_loss_3, d.open, d.high, d.low, d.close, d.strategy] if d.profit_percent <= -2
+				elsif d.strategy % 10 != 7 and d.strategy % 10 != 2
+					datan_s << [d.stock_name, d.profit_percent, d.last_close, d.target_1, d.stop_loss_1, d.target_2, d.stop_loss_2, d.target_3, d.stop_loss_3, d.open, d.high, d.low, d.close, d.strategy]
+				end
 			end
 		end
-
-
-		datan_b = [["Name", "Last_close", "Target 1", "Stop Loss 1", "Target 2", "Stop Loss 2", "Target 3", "Stop Loss 3", "Expected Open", "Expected High", "Expected Low", "Expected Close", "Strategy"]]
-		data.each do |dd|
-			datan_b_all = NseBsStrategy.where("strategy = ? AND bs_signal = 1", dd)
-			datan_b_all.each do |d|
-				datan_b << [d.stock_name, d.last_close, d.target_1, d.stop_loss_1, d.target_2, d.stop_loss_2, d.target_3, d.stop_loss_3, d.open, d.high, d.low, d.close, d.strategy]
-			end
-		end
-
-		datan_s = [["Name", "Last_close", "Target 1", "Stop Loss 1", "Target 2", "Stop Loss 2", "Target 3", "Stop Loss 3", "Expected Open", "Expected High", "Expected Low", "Expected Close", "Strategy"]]
-		data.each do |dd|
-			datan_s_all = NseBsStrategy.where("strategy = ? AND bs_signal = -1", dd)
-			datan_s_all.each do |d|
-				datan_s << [d.stock_name, d.last_close, d.target_1, d.stop_loss_1, d.target_2, d.stop_loss_2, d.target_3, d.stop_loss_3, d.open, d.high, d.low, d.close, d.strategy]
-			end
-		end
+		
 		
 
 		CSV.open("error_files/strategy.csv", "wb") do |csv|
@@ -261,400 +303,3 @@ validates :stock_name, uniqueness: true
 	end	
 end
 
-
-# def self.strategy1
-# 		#For best BUYERS
-# 		data = BseTrend.where("d3_t = 3").order("avg_high desc").limit(30)
-# 		st = 1
-# 		data.each do |d|
-# 			if d.avg_high > 10 
-# 				if d.avg_low > 0
-# 					target1 = d.last_close * 1.02
-# 					stop_loss1 = d.last_close
-# 					target2 = d.last_close * 1.035
-# 					stop_loss2 = d.last_close * 1.01
-# 					target3 = d.last_close * 1.05
-# 					stop_loss3 = d.last_close * 1.03
-# 				elsif d.avg_low < 0 and d.avg_low > -1
-# 					target1 = d.last_close * 1.02
-# 					stop_loss1 = d.last_close * (1 + ((d.avg_low * 1.25)/100))
-# 					target2 = d.last_close * 1.035
-# 					stop_loss2 = d.last_close 
-# 					target3 = d.last_close * 1.05
-# 					stop_loss3 = d.last_close * 1.025
-# 				else
-# 					target1 = d.last_close * 1.02
-# 					stop_loss1 = d.last_close * (1 + ((d.avg_low)/100))
-# 					target2 = d.last_close * 1.035
-# 					stop_loss2 = d.last_close 
-# 					target3 = d.last_close * 1.05
-# 					stop_loss3 = d.last_close * 1.02
-# 				end
-# 			else
-# 				if d.avg_low > 0
-# 					d.avg_low = 1 if d.avg_low > 1
-# 					target1 = d.last_close * (1 + ((d.avg_high * 0.25)/100))
-# 					stop_loss1 = d.last_close
-# 					target2 = d.last_close * (1 + ((d.avg_high * 0.4)/100))
-# 					stop_loss2 = d.last_close * (1 + ((d.avg_low)/100))
-# 					target3 = d.last_close * (1 + ((d.avg_high * 0.5)/100))
-# 					stop_loss3 = d.last_close * (1 + ((d.avg_low * 1.25)/100))
-# 				elsif d.avg_low < 0 and d.avg_low > -1
-# 					target1 = d.last_close * (1 + ((d.avg_high * 0.25)/100))
-# 					stop_loss1 = d.last_close * (1 + ((d.avg_low * 1.25)/100))
-# 					target2 = d.last_close * (1 + ((d.avg_high * 0.4)/100))
-# 					stop_loss2 = d.last_close  
-# 					target3 = d.last_close * (1 + ((d.avg_high * 0.5)/100))
-# 					stop_loss3 = d.last_close * (1 - ((d.avg_low * 0.2)/100))
-# 				else
-# 					target1 = d.last_close * (1 + ((d.avg_high * 0.25)/100))
-# 					stop_loss1 = d.last_close * (1 + ((d.avg_low)/100))
-# 					target2 = d.last_close * (1 + ((d.avg_high * 0.4)/100))
-# 					stop_loss2 = d.last_close * (1 + ((d.avg_low * 0.25)/100))
-# 					target3 = d.last_close * (1 + ((d.avg_high * 0.5)/100))
-# 					stop_loss3 = d.last_close * (1 - ((d.avg_low * 0.25)/100))
-# 				end
-# 			end
-# 			BseBsStrategy.create(:stock_name => d.stock_name, :bse_stock_id => d.bse_stock_id,
-# 				:date => d.date, :vol_category => d.vol_category, :last_close => d.last_close,
-# 				:bs_signal => 1, :open => (d.last_close * ( 1 + (d.avg_open / 100))), 
-# 				:high => (d.last_close * (1 + (d.avg_high / 100))), 
-# 				:low => (d.last_close * (1 + (d.avg_low / 100))),
-# 				:close => (d.last_close * (1 + (d.avg_close / 100))),
-# 				:target_1 => target1, :stop_loss_1 => stop_loss1,
-# 				:target_2 => target2, :stop_loss_2 => stop_loss2,
-# 				:target_3 => target3, :stop_loss_3 => stop_loss3,
-# 				:rank => st, :strategy => 1)
-# 			st += 1
-# 		end	
-
-# 		#For best sellers
-# 		data = BseTrend.where("d3_t = -3").order("avg_low asc").limit(30)
-# 		st = 1
-# 		data.each do |d|				
-# 			if d.avg_low < -10
-# 				if d.avg_high < 0
-# 					d.avg_high = -1 if d.avg_high < -1
-# 					target1 = d.last_close * 0.98
-# 					stop_loss1 = d.last_close
-# 					target2 = d.last_close * 0.965
-# 					stop_loss2 = d.last_close * 0.99
-# 					target3 = d.last_close * 0.95
-# 					stop_loss3 = d.last_close * 0.97
-# 				elsif d.avg_high > 0 and d.avg_low < 1
-# 					target1 = d.last_close * 0.98
-# 					stop_loss1 = d.last_close * (1 + ((d.avg_high * 1.25)/100))
-# 					target2 = d.last_close * 0.965
-# 					stop_loss2 = d.last_close 
-# 					target3 = d.last_close * 0.95
-# 					stop_loss3 = d.last_close * 0.975
-# 				else
-# 					target1 = d.last_close * 0.98
-# 					stop_loss1 = d.last_close * (1 + ((d.avg_high)/100))
-# 					target2 = d.last_close * 0.965
-# 					stop_loss2 = d.last_close 
-# 					target3 = d.last_close * 0.95
-# 					stop_loss3 = d.last_close * 0.98
-# 				end
-# 			else
-# 				if d.avg_high < 0
-# 					d.avg_high = -1 if d.avg_high < -1
-# 					target1 = d.last_close * (1 + ((d.avg_low * 0.25)/100))
-# 					stop_loss1 = d.last_close
-# 					target2 = d.last_close * (1 + ((d.avg_low * 0.4)/100))
-# 					stop_loss2 = d.last_close * (1 - ((d.avg_high)/100))
-# 					target3 = d.last_close * (1 + ((d.avg_low * 0.5)/100))
-# 					stop_loss3 = d.last_close * (1 - ((d.avg_high * 1.25)/100))
-# 				elsif d.avg_high > 0 and d.avg_high < 1
-# 					target1 = d.last_close * (1 + ((d.avg_low * 0.25)/100))
-# 					stop_loss1 = d.last_close * (1 + ((d.avg_high * 1.25)/100))
-# 					target2 = d.last_close * (1 + ((d.avg_low * 0.4)/100))
-# 					stop_loss2 = d.last_close  
-# 					target3 = d.last_close * (1 + ((d.avg_low * 0.5)/100))
-# 					stop_loss3 = d.last_close * (1 - ((d.avg_high * 0.2)/100))
-# 				else
-# 					target1 = d.last_close * (1 + ((d.avg_low * 0.25)/100))
-# 					stop_loss1 = d.last_close * (1 + ((d.avg_high)/100))
-# 					target2 = d.last_close * (1 + ((d.avg_low * 0.4)/100))
-# 					stop_loss2 = d.last_close * (1 + ((d.avg_high * 0.25)/100))
-# 					target3 = d.last_close * (1 + ((d.avg_low * 0.5)/100))
-# 					stop_loss3 = d.last_close * (1 - ((d.avg_high * 0.25)/100))
-# 				end
-# 			end
-# 			BseBsStrategy.create(:stock_name => d.stock_name, :bse_stock_id => d.bse_stock_id,
-# 				:date => d.date, :vol_category => d.vol_category, :last_close => d.last_close,
-# 				:bs_signal => -1, :open => (d.last_close * ( 1 + (d.avg_open / 100))), 
-# 				:high => (d.last_close * (1 + (d.avg_high / 100))), 
-# 				:low => (d.last_close * (1 + (d.avg_low / 100))),
-# 				:close => (d.last_close * (1 + (d.avg_close / 100))),
-# 				:target_1 => target1, :stop_loss_1 => stop_loss1,
-# 				:target_2 => target2, :stop_loss_2 => stop_loss2,
-# 				:target_3 => target3, :stop_loss_3 => stop_loss3,
-# 				:rank => st, :strategy => 1)
-# 			st += 1
-# 		end		
-# 	end
-
-# 	def self.strategy2
-# 		#For best BUYERS
-# 		data = BseTrend.where("d3_t = 1 AND d7_t > 0").order("avg_high desc").limit(30)
-# 		st = 1
-# 		data.each do |d|
-# 			if d.avg_high > 10
-# 				if d.avg_low > 0
-# 					target1 = d.last_close * 1.02
-# 					stop_loss1 = d.last_close
-# 					target2 = d.last_close * 1.035
-# 					stop_loss2 = d.last_close * 1.01
-# 					target3 = d.last_close * 1.05
-# 					stop_loss3 = d.last_close * 1.03
-# 				elsif d.avg_low < 0 and d.avg_low > -1
-# 					target1 = d.last_close * 1.02
-# 					stop_loss1 = d.last_close * (1 + ((d.avg_low * 1.25)/100))
-# 					target2 = d.last_close * 1.035
-# 					stop_loss2 = d.last_close 
-# 					target3 = d.last_close * 1.05
-# 					stop_loss3 = d.last_close * 1.025
-# 				else
-# 					target1 = d.last_close * 1.02
-# 					stop_loss1 = d.last_close * (1 + ((d.avg_low)/100))
-# 					target2 = d.last_close * 1.035
-# 					stop_loss2 = d.last_close 
-# 					target3 = d.last_close * 1.05
-# 					stop_loss3 = d.last_close * 1.02
-# 				end
-# 			else
-# 				if d.avg_low > 0
-# 					d.avg_low = 1 if d.avg_low > 1
-# 					target1 = d.last_close * (1 + ((d.avg_high * 0.25)/100))
-# 					stop_loss1 = d.last_close
-# 					target2 = d.last_close * (1 + ((d.avg_high * 0.4)/100))
-# 					stop_loss2 = d.last_close * (1 + ((d.avg_low)/100))
-# 					target3 = d.last_close * (1 + ((d.avg_high * 0.5)/100))
-# 					stop_loss3 = d.last_close * (1 + ((d.avg_low * 1.25)/100))
-# 				elsif d.avg_low < 0 and d.avg_low > -1
-# 					target1 = d.last_close * (1 + ((d.avg_high * 0.25)/100))
-# 					stop_loss1 = d.last_close * (1 + ((d.avg_low * 1.25)/100))
-# 					target2 = d.last_close * (1 + ((d.avg_high * 0.4)/100))
-# 					stop_loss2 = d.last_close  
-# 					target3 = d.last_close * (1 + ((d.avg_high * 0.5)/100))
-# 					stop_loss3 = d.last_close * (1 - ((d.avg_low * 0.2)/100))
-# 				else
-# 					target1 = d.last_close * (1 + ((d.avg_high * 0.25)/100))
-# 					stop_loss1 = d.last_close * (1 + ((d.avg_low)/100))
-# 					target2 = d.last_close * (1 + ((d.avg_high * 0.4)/100))
-# 					stop_loss2 = d.last_close * (1 + ((d.avg_low * 0.25)/100))
-# 					target3 = d.last_close * (1 + ((d.avg_high * 0.5)/100))
-# 					stop_loss3 = d.last_close * (1 - ((d.avg_low * 0.25)/100))
-# 				end
-# 			end
-# 			BseBsStrategy.create(:stock_name => d.stock_name, :bse_stock_id => d.bse_stock_id,
-# 				:date => d.date, :vol_category => d.vol_category, :last_close => d.last_close,
-# 				:bs_signal => 1, :open => (d.last_close * ( 1 + (d.avg_open / 100))), 
-# 				:high => (d.last_close * (1 + (d.avg_high / 100))), 
-# 				:low => (d.last_close * (1 + (d.avg_low / 100))),
-# 				:close => (d.last_close * (1 + (d.avg_close / 100))),
-# 				:target_1 => target1, :stop_loss_1 => stop_loss1,
-# 				:target_2 => target2, :stop_loss_2 => stop_loss2,
-# 				:target_3 => target3, :stop_loss_3 => stop_loss3,
-# 				:rank => st, :strategy => 2)
-# 			st += 1
-# 		end	
-
-# 		#For best sellers
-# 		data = BseTrend.where("d3_t = -1 AND d7_t < 0").order("avg_low asc").limit(30)
-# 		st = 1
-# 		data.each do |d|				
-# 			if d.avg_low < -10
-# 				if d.avg_high < 0
-# 					d.avg_high = -1 if d.avg_high < -1
-# 					target1 = d.last_close * 0.98
-# 					stop_loss1 = d.last_close
-# 					target2 = d.last_close * 0.965
-# 					stop_loss2 = d.last_close * 0.99
-# 					target3 = d.last_close * 0.95
-# 					stop_loss3 = d.last_close * 0.97
-# 				elsif d.avg_high > 0 and d.avg_low < 1
-# 					target1 = d.last_close * 0.98
-# 					stop_loss1 = d.last_close * (1 + ((d.avg_high * 1.25)/100))
-# 					target2 = d.last_close * 0.965
-# 					stop_loss2 = d.last_close 
-# 					target3 = d.last_close * 0.95
-# 					stop_loss3 = d.last_close * 0.975
-# 				else
-# 					target1 = d.last_close * 0.98
-# 					stop_loss1 = d.last_close * (1 + ((d.avg_high)/100))
-# 					target2 = d.last_close * 0.965
-# 					stop_loss2 = d.last_close 
-# 					target3 = d.last_close * 0.95
-# 					stop_loss3 = d.last_close * 0.98
-# 				end
-# 			else
-# 				if d.avg_high < 0
-# 					target1 = d.last_close * (1 + ((d.avg_low * 0.25)/100))
-# 					stop_loss1 = d.last_close
-# 					target2 = d.last_close * (1 + ((d.avg_low * 0.4)/100))
-# 					stop_loss2 = d.last_close * (1 - ((d.avg_high)/100))
-# 					target3 = d.last_close * (1 + ((d.avg_low * 0.5)/100))
-# 					stop_loss3 = d.last_close * (1 - ((d.avg_high * 1.25)/100))
-# 				elsif d.avg_high > 0 and d.avg_high < 1
-# 					target1 = d.last_close * (1 + ((d.avg_low * 0.25)/100))
-# 					stop_loss1 = d.last_close * (1 + ((d.avg_high * 1.25)/100))
-# 					target2 = d.last_close * (1 + ((d.avg_low * 0.4)/100))
-# 					stop_loss2 = d.last_close  
-# 					target3 = d.last_close * (1 + ((d.avg_low * 0.5)/100))
-# 					stop_loss3 = d.last_close * (1 - ((d.avg_high * 0.2)/100))
-# 				else
-# 					target1 = d.last_close * (1 + ((d.avg_low * 0.25)/100))
-# 					stop_loss1 = d.last_close * (1 + ((d.avg_high)/100))
-# 					target2 = d.last_close * (1 + ((d.avg_low * 0.4)/100))
-# 					stop_loss2 = d.last_close * (1 + ((d.avg_high * 0.25)/100))
-# 					target3 = d.last_close * (1 + ((d.avg_low * 0.5)/100))
-# 					stop_loss3 = d.last_close * (1 - ((d.avg_high * 0.25)/100))
-# 				end
-# 			end
-# 			BseBsStrategy.create(:stock_name => d.stock_name, :bse_stock_id => d.bse_stock_id,
-# 				:date => d.date, :vol_category => d.vol_category, :last_close => d.last_close,
-# 				:bs_signal => -1, :open => (d.last_close * ( 1 + (d.avg_open / 100))), 
-# 				:high => (d.last_close * (1 + (d.avg_high / 100))), 
-# 				:low => (d.last_close * (1 + (d.avg_low / 100))),
-# 				:close => (d.last_close * (1 + (d.avg_close / 100))),
-# 				:target_1 => target1, :stop_loss_1 => stop_loss1,
-# 				:target_2 => target2, :stop_loss_2 => stop_loss2,
-# 				:target_3 => target3, :stop_loss_3 => stop_loss3,
-# 				:rank => st, :strategy => 2)
-# 			st += 1
-# 		end			
-# 	end
-
-# 	def self.strategy3
-# 		#For best BUYERS
-# 		data = BseTrend.where("d3_t = -1 AND d7_t > 0 AND d15_t > 0").order("avg_high desc").limit(30)
-# 		st = 1
-# 		data.each do |d|
-# 			if d.avg_high > 10
-# 				if d.avg_low > 0
-# 					target1 = d.last_close * 1.02
-# 					stop_loss1 = d.last_close
-# 					target2 = d.last_close * 1.035
-# 					stop_loss2 = d.last_close * 1.01
-# 					target3 = d.last_close * 1.05
-# 					stop_loss3 = d.last_close * 1.03
-# 				elsif d.avg_low < 0 and d.avg_low > -1
-# 					target1 = d.last_close * 1.02
-# 					stop_loss1 = d.last_close * (1 + ((d.avg_low * 1.25)/100))
-# 					target2 = d.last_close * 1.035
-# 					stop_loss2 = d.last_close 
-# 					target3 = d.last_close * 1.05
-# 					stop_loss3 = d.last_close * 1.025
-# 				else
-# 					target1 = d.last_close * 1.02
-# 					stop_loss1 = d.last_close * (1 + ((d.avg_low)/100))
-# 					target2 = d.last_close * 1.035
-# 					stop_loss2 = d.last_close 
-# 					target3 = d.last_close * 1.05
-# 					stop_loss3 = d.last_close * 1.02
-# 				end
-# 			else
-# 				if d.avg_low > 0
-# 					d.avg_low = 1 if d.avg_low > 1
-# 					target1 = d.last_close * (1 + ((d.avg_high * 0.25)/100))
-# 					stop_loss1 = d.last_close
-# 					target2 = d.last_close * (1 + ((d.avg_high * 0.4)/100))
-# 					stop_loss2 = d.last_close * (1 + ((d.avg_low)/100))
-# 					target3 = d.last_close * (1 + ((d.avg_high * 0.5)/100))
-# 					stop_loss3 = d.last_close * (1 + ((d.avg_low * 1.25)/100))
-# 				elsif d.avg_low < 0 and d.avg_low > -1
-# 					target1 = d.last_close * (1 + ((d.avg_high * 0.25)/100))
-# 					stop_loss1 = d.last_close * (1 + ((d.avg_low * 1.25)/100))
-# 					target2 = d.last_close * (1 + ((d.avg_high * 0.4)/100))
-# 					stop_loss2 = d.last_close  
-# 					target3 = d.last_close * (1 + ((d.avg_high * 0.5)/100))
-# 					stop_loss3 = d.last_close * (1 - ((d.avg_low * 0.2)/100))
-# 				else
-# 					target1 = d.last_close * (1 + ((d.avg_high * 0.25)/100))
-# 					stop_loss1 = d.last_close * (1 + ((d.avg_low)/100))
-# 					target2 = d.last_close * (1 + ((d.avg_high * 0.4)/100))
-# 					stop_loss2 = d.last_close * (1 + ((d.avg_low * 0.25)/100))
-# 					target3 = d.last_close * (1 + ((d.avg_high * 0.5)/100))
-# 					stop_loss3 = d.last_close * (1 - ((d.avg_low * 0.25)/100))
-# 				end
-# 			end
-# 			BseBsStrategy.create(:stock_name => d.stock_name, :bse_stock_id => d.bse_stock_id,
-# 				:date => d.date, :vol_category => d.vol_category, :last_close => d.last_close,
-# 				:bs_signal => 1, :open => (d.last_close * ( 1 + (d.avg_open / 100))), 
-# 				:high => (d.last_close * (1 + (d.avg_high / 100))), 
-# 				:low => (d.last_close * (1 + (d.avg_low / 100))),
-# 				:close => (d.last_close * (1 + (d.avg_close / 100))),
-# 				:target_1 => target1, :stop_loss_1 => stop_loss1,
-# 				:target_2 => target2, :stop_loss_2 => stop_loss2,
-# 				:target_3 => target3, :stop_loss_3 => stop_loss3,
-# 				:rank => st, :strategy => 3)
-# 			st += 1
-# 		end	
-
-# 		#For best sellers
-# 		data = BseTrend.where("d3_t = 1 AND d7_t < 0 AND d15_t < 0").order("avg_low asc").limit(30)
-# 		st = 1
-# 		data.each do |d|				
-# 			if d.avg_low < -10
-# 				if d.avg_high < 0
-# 					d.avg_high = -1 if d.avg_high < -1
-# 					target1 = d.last_close * 0.98
-# 					stop_loss1 = d.last_close
-# 					target2 = d.last_close * 0.965
-# 					stop_loss2 = d.last_close * 0.99
-# 					target3 = d.last_close * 0.95
-# 					stop_loss3 = d.last_close * 0.97
-# 				elsif d.avg_high > 0 and d.avg_low < 1
-# 					target1 = d.last_close * 0.98
-# 					stop_loss1 = d.last_close * (1 + ((d.avg_high * 1.25)/100))
-# 					target2 = d.last_close * 0.965
-# 					stop_loss2 = d.last_close 
-# 					target3 = d.last_close * 0.95
-# 					stop_loss3 = d.last_close * 0.975
-# 				else
-# 					target1 = d.last_close * 0.98
-# 					stop_loss1 = d.last_close * (1 + ((d.avg_high)/100))
-# 					target2 = d.last_close * 0.965
-# 					stop_loss2 = d.last_close 
-# 					target3 = d.last_close * 0.95
-# 					stop_loss3 = d.last_close * 0.98
-# 				end
-# 			else
-# 				if d.avg_high < 0
-# 					target1 = d.last_close * (1 + ((d.avg_low * 0.25)/100))
-# 					stop_loss1 = d.last_close
-# 					target2 = d.last_close * (1 + ((d.avg_low * 0.4)/100))
-# 					stop_loss2 = d.last_close * (1 - ((d.avg_high)/100))
-# 					target3 = d.last_close * (1 + ((d.avg_low * 0.5)/100))
-# 					stop_loss3 = d.last_close * (1 - ((d.avg_high * 1.25)/100))
-# 				elsif d.avg_high > 0 and d.avg_high < 1
-# 					target1 = d.last_close * (1 + ((d.avg_low * 0.25)/100))
-# 					stop_loss1 = d.last_close * (1 + ((d.avg_high * 1.25)/100))
-# 					target2 = d.last_close * (1 + ((d.avg_low * 0.4)/100))
-# 					stop_loss2 = d.last_close  
-# 					target3 = d.last_close * (1 + ((d.avg_low * 0.5)/100))
-# 					stop_loss3 = d.last_close * (1 - ((d.avg_high * 0.2)/100))
-# 				else
-# 					target1 = d.last_close * (1 + ((d.avg_low * 0.25)/100))
-# 					stop_loss1 = d.last_close * (1 + ((d.avg_high)/100))
-# 					target2 = d.last_close * (1 + ((d.avg_low * 0.4)/100))
-# 					stop_loss2 = d.last_close * (1 + ((d.avg_high * 0.25)/100))
-# 					target3 = d.last_close * (1 + ((d.avg_low * 0.5)/100))
-# 					stop_loss3 = d.last_close * (1 - ((d.avg_high * 0.25)/100))
-# 				end
-# 			end
-# 			BseBsStrategy.create(:stock_name => d.stock_name, :bse_stock_id => d.bse_stock_id,
-# 				:date => d.date, :vol_category => d.vol_category, :last_close => d.last_close,
-# 				:bs_signal => -1, :open => (d.last_close * ( 1 + (d.avg_open / 100))), 
-# 				:high => (d.last_close * (1 + (d.avg_high / 100))), 
-# 				:low => (d.last_close * (1 + (d.avg_low / 100))),
-# 				:close => (d.last_close * (1 + (d.avg_close / 100))),
-# 				:target_1 => target1, :stop_loss_1 => stop_loss1,
-# 				:target_2 => target2, :stop_loss_2 => stop_loss2,
-# 				:target_3 => target3, :stop_loss_3 => stop_loss3,
-# 				:rank => st, :strategy => 1)
-# 			st += 1
-# 		end		
-# 	end
