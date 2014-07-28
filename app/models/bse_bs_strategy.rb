@@ -68,11 +68,20 @@ validates :stock_name, uniqueness: true
 						stp = 8 if d.avg_low <= -2
 					end
 				end
-				debugger if stp.nil?
-				st = 40 + stp
-				st = 10 + stp if d.d3_t == 3 and d.d7_t > 0 and d.d15_t > 0 and d.d30_t >= 0
-				st = 20 + stp if d.d3_t == 1 and d.d7_t > 0 and d.d15_t > 0 and d.d30_t >= 0 and d.bs_signal = 1
-				st = 30 + stp if d.d3_t == -1 and d.d7_t > 0 and d.d15_t > 0 and d.d30_t >= 0 and d.bs_signal = 1
+				str = 60
+				str = 10 if d.d3_t == 3
+				str = 20 if d.d3_t == 1 and d.bs_signal == 1
+				str = 30 if d.d3_t == -1 and d.bs_signal == 1
+				str = 40 if d.d3_t == 1 and d.bs_signal == -1
+				str = 50 if d.d3_t == -1 and d.bs_signal == -1
+
+
+				st = 500 + str + stp
+				st = 100 + str + stp if d.d30_t >= 0 and d.d15_t > 0 and d.d7_t > 0
+				st = 200 + str + stp if d.d30_t < 0 and d.d15_t > 0 and d.d7_t > 0
+				st = 300 + str + stp if d.d30_t < 0 and d.d15_t < 0 and d.d7_t > 0
+				st = 400 + str + stp if d.d30_t < 0 and d.d15_t < 0 and d.d7_t < 0 and d.d3_t > 0
+				
 				BseBsStrategy.create(:stock_name => d.stock_name, :bse_stock_id => d.bse_stock_id,
 					:bse_code => d.bse_code, :date => d.date, :vol_category => d.vol_category, :last_close => d.last_close,
 					:bs_signal => 1, :profit_percent => d.avg_high,
@@ -92,66 +101,77 @@ validates :stock_name, uniqueness: true
 		data = BseTrend.order("avg_low asc")
 		rank = 1
 		data.each do |d|	
+			open = (d.last_close * ( 1 + (d.avg_open / 100)))
 			if (-1 * d.avg_low) > d.avg_high
-				if d.avg_low < -10
+				if d.avg_low < -4
 					if d.avg_high < 0
 						d.avg_high = -1 if d.avg_high < -1
-						target1 = d.last_close * 0.98
-						stop_loss1 = d.last_close
-						target2 = d.last_close * 0.965
-						stop_loss2 = d.last_close * 0.99
-						target3 = d.last_close * 0.95
-						stop_loss3 = d.last_close * 0.97
+						target1 = open * 0.98
+						stop_loss1 = open
+						target2 = open * 0.965
+						stop_loss2 = open * 0.99
+						target3 = open * 0.95
+						stop_loss3 = open * 0.97
 						stp = 1
 					elsif d.avg_high > 0 and d.avg_low < 1
-						target1 = d.last_close * 0.98
-						stop_loss1 = d.last_close * (1 + ((d.avg_high * 1.25)/100))
-						target2 = d.last_close * 0.965
-						stop_loss2 = d.last_close 
-						target3 = d.last_close * 0.95
-						stop_loss3 = d.last_close * 0.975
+						target1 = open * 0.98
+						stop_loss1 = open * (1 + ((d.avg_high * 1.25)/100))
+						target2 = open * 0.965
+						stop_loss2 = open 
+						target3 = open * 0.95
+						stop_loss3 = open * 0.975
 						stp = 3
 					else
-						target1 = d.last_close * 0.98
-						stop_loss1 = d.last_close * (1 + ((d.avg_high)/100))
-						target2 = d.last_close * 0.965
-						stop_loss2 = d.last_close 
-						target3 = d.last_close * 0.95
-						stop_loss3 = d.last_close * 0.98
+						target1 = open * 0.98
+						stop_loss1 = open * (1 + ((d.avg_high)/100))
+						target2 = open * 0.965
+						stop_loss2 = open 
+						target3 = open * 0.95
+						stop_loss3 = open * 0.98
 						stp = 5
 					end
 				else
 					if d.avg_high < 0
 						d.avg_high = -1 if d.avg_high < -1
-						target1 = d.last_close * (1 + ((d.avg_low * 0.25)/100))
-						stop_loss1 = d.last_close
-						target2 = d.last_close * (1 + ((d.avg_low * 0.4)/100))
-						stop_loss2 = d.last_close * (1 - ((d.avg_high)/100))
-						target3 = d.last_close * (1 + ((d.avg_low * 0.5)/100))
-						stop_loss3 = d.last_close * (1 - ((d.avg_high * 1.25)/100))
+						target1 = open * (1 + ((d.avg_low * 0.25)/100))
+						stop_loss1 = open
+						target2 = open * (1 + ((d.avg_low * 0.4)/100))
+						stop_loss2 = open * (1 - ((d.avg_high)/100))
+						target3 = open * (1 + ((d.avg_low * 0.5)/100))
+						stop_loss3 = open * (1 - ((d.avg_high * 1.25)/100))
 						stp = 2
 					elsif d.avg_high > 0 and d.avg_high < 1
-						target1 = d.last_close * (1 + ((d.avg_low * 0.25)/100))
-						stop_loss1 = d.last_close * (1 + ((d.avg_high * 1.25)/100))
-						target2 = d.last_close * (1 + ((d.avg_low * 0.4)/100))
-						stop_loss2 = d.last_close  
-						target3 = d.last_close * (1 + ((d.avg_low * 0.5)/100))
-						stop_loss3 = d.last_close * (1 - ((d.avg_high * 0.2)/100))
+						target1 = open * (1 + ((d.avg_low * 0.25)/100))
+						stop_loss1 = open * (1 + ((d.avg_high * 1.25)/100))
+						target2 = open * (1 + ((d.avg_low * 0.4)/100))
+						stop_loss2 = open  
+						target3 = open * (1 + ((d.avg_low * 0.5)/100))
+						stop_loss3 = open * (1 - ((d.avg_high * 0.2)/100))
 						stp = 4
 					else
-						target1 = d.last_close * (1 + ((d.avg_low * 0.25)/100))
-						stop_loss1 = d.last_close * (1 + ((d.avg_high)/100))
-						target2 = d.last_close * (1 + ((d.avg_low * 0.4)/100))
-						stop_loss2 = d.last_close * (1 + ((d.avg_high * 0.25)/100))
-						target3 = d.last_close * (1 + ((d.avg_low * 0.5)/100))
-						stop_loss3 = d.last_close * (1 - ((d.avg_high * 0.25)/100))
+						target1 = open * (1 + ((d.avg_low * 0.25)/100))
+						stop_loss1 = open * (1 + ((d.avg_high)/100))
+						target2 = open * (1 + ((d.avg_low * 0.4)/100))
+						stop_loss2 = open * (1 + ((d.avg_high * 0.25)/100))
+						target3 = open * (1 + ((d.avg_low * 0.5)/100))
+						stop_loss3 = open * (1 - ((d.avg_high * 0.25)/100))
 						stp = 6
 					end
 				end
-				st = 40 + stp
-				st = 10 + stp if d.d3_t == -3
-				st = 20 + stp if d.d3_t == -1 and d.d7_t < 0 and d.bs_signal = -1
-				st = 30 + stp if d.d3_t == 1 and d.d7_t < 0 and d.d15_t < 0 and d.bs_signal = -1
+				
+				str = 60
+				str = 10 if d.d3_t == -3
+				str = 20 if d.d3_t == -1 and d.bs_signal == -1
+				str = 30 if d.d3_t == 1 and d.bs_signal == -1
+				str = 40 if d.d3_t == -1 and d.bs_signal == 1
+				str = 50 if d.d3_t == 1 and d.bs_signal == 1
+
+				st = 500 + str + stp
+				st = 100 + str + stp if d.d30_t <= 0 and d.d15_t < 0 and d.d7_t < 0
+				st = 200 + str + stp if d.d30_t > 0 and d.d15_t < 0 and d.d7_t < 0
+				st = 300 + str + stp if d.d30_t > 0 and d.d15_t > 0 and d.d7_t < 0
+				st = 400 + str + stp if d.d30_t > 0 and d.d15_t > 0 and d.d7_t > 0 and d.d3_t < 0
+
 				BseBsStrategy.create(:stock_name => d.stock_name, :bse_stock_id => d.bse_stock_id,
 					:bse_code => d.bse_code, :date => d.date, :vol_category => d.vol_category, :last_close => d.last_close,
 					:bs_signal => -1, :profit_percent => d.avg_low,
