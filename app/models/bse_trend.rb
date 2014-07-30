@@ -4,6 +4,7 @@ class BseTrend < ActiveRecord::Base
 	validates :date, uniqueness: { scope: :bse_stock_id}
 
 	def self.trend
+		BseTrend.destroy_all
 		ids = BseStock.where("vol_category >= 3")
 		file = File.new("error_files/Bse_Trend", "w+")
 		date = BseStocksDetail.uniq.pluck(:date).sort.last

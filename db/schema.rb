@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140722120831) do
+ActiveRecord::Schema.define(version: 20140730103525) do
 
   create_table "bse4_bs_strategies", force: true do |t|
     t.string   "stock_name",    null: false
@@ -63,6 +63,7 @@ ActiveRecord::Schema.define(version: 20140722120831) do
     t.integer  "d_3_cli"
     t.integer  "bs_signal",    null: false
     t.float    "last_close",   null: false
+    t.float    "avg_open"
     t.float    "avg_high"
     t.float    "avg_low"
     t.float    "avg_close"
@@ -156,6 +157,19 @@ ActiveRecord::Schema.define(version: 20140722120831) do
     t.integer "volume"
     t.integer "no_of_trades"
     t.integer "total_turnover", limit: 8
+  end
+
+  create_table "bse_indices", force: true do |t|
+    t.string "indices_name"
+  end
+
+  create_table "bse_indices_dumps", force: true do |t|
+    t.integer "bse_indices_id"
+    t.date    "date"
+    t.float   "open"
+    t.float   "high"
+    t.float   "low"
+    t.float   "close"
   end
 
   create_table "bse_stocks", force: true do |t|
@@ -260,6 +274,7 @@ ActiveRecord::Schema.define(version: 20140722120831) do
     t.float    "last_close"
     t.integer  "bs_signal"
     t.integer  "vol_category"
+    t.float    "profit_percent"
     t.float    "open"
     t.float    "high"
     t.float    "low"
@@ -285,6 +300,20 @@ ActiveRecord::Schema.define(version: 20140722120831) do
     t.float   "close"
     t.integer "volume"
     t.float   "turnover"
+  end
+
+  create_table "nse_indices", force: true do |t|
+    t.string "indices_name"
+  end
+
+  create_table "nse_indices_dumps", force: true do |t|
+    t.integer "nse_indices_id"
+    t.date    "date"
+    t.float   "open"
+    t.float   "high"
+    t.float   "low"
+    t.float   "close"
+    t.integer "volume"
   end
 
   create_table "nse_stocks", force: true do |t|
@@ -350,6 +379,7 @@ ActiveRecord::Schema.define(version: 20140722120831) do
 
   create_table "strategy_analyses", force: true do |t|
     t.integer  "strategy"
+    t.date     "date"
     t.integer  "bs_signal"
     t.integer  "total_shares"
     t.float    "profit_loss"

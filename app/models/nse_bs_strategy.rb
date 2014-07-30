@@ -6,6 +6,7 @@ validates :stock_name, uniqueness: true
 
 	def self.strategy
 		#For best BUYERS
+		NseBsStrategy.destroy_all
 		data = NseTrend.order("avg_high desc")
 		rank = 1
 		data.each do |d|

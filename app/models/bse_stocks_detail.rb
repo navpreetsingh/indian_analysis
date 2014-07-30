@@ -12,6 +12,7 @@ class BseStocksDetail < ActiveRecord::Base
 		BseBsStrategy.strategy
 		BseBsStrategy.csv_op
 		BseDump.update_data
+		BseIndicesDump.daily_update
 		#BseStock.category
 		#BseStocksDetail.spread_new
 	end
