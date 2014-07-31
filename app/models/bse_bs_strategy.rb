@@ -38,7 +38,7 @@ validates :stock_name, uniqueness: true
 						target3 = open * 1.05
 						stop_loss3 = open * 1.02
 						stp = 5 if d.avg_low > -2
-						stp = 7 if d.avg_low < -2
+						stp = 7 if d.avg_low <= -2
 					end
 				else
 					if d.avg_low > 0
@@ -129,7 +129,8 @@ validates :stock_name, uniqueness: true
 						stop_loss2 = open 
 						target3 = open * 0.95
 						stop_loss3 = open * 0.98
-						stp = 5
+						stp = 5 if d.avg_high < 2
+						stp = 7 if d.avg_high >= 2
 					end
 				else
 					if d.avg_high < 0
@@ -156,7 +157,8 @@ validates :stock_name, uniqueness: true
 						stop_loss2 = open * (1 + ((d.avg_high * 0.25)/100))
 						target3 = open * (1 + ((d.avg_low * 0.5)/100))
 						stop_loss3 = open * (1 - ((d.avg_high * 0.25)/100))
-						stp = 6
+						stp = 6 if d.avg_high < 2
+						stp = 8 if d.avg_high >= 2
 					end
 				end
 				
