@@ -19,7 +19,7 @@ class BseStocksDetail < ActiveRecord::Base
 	
 
 	def self.spread
-		ids = BseStock.where("vol_category >= 3").collect(&:id)	
+		ids = BseStock.where("vol_category >= 2 and useless_stock = 1").collect(&:id)	
 		file = File.new("error_files/Bse_spread", "w+")			
 		ids.each do |stock|
 			begin
@@ -44,7 +44,7 @@ class BseStocksDetail < ActiveRecord::Base
 	end
 
 	def self.spread_new
-		ids = BseStock.where("vol_category >= 3").collect(&:id)	
+		ids = BseStock.where("vol_category >= 2 and useless_stock = 1").collect(&:id)	
 		file = File.new("error_files/Bse_spread_new", "w+")			
 		ids.each do |stock|
 			begin
@@ -59,8 +59,10 @@ class BseStocksDetail < ActiveRecord::Base
 	 				dy_ch = (((dt.high - dy.close) / dy.close)*100).round(2).to_f
 	 				dy_cl = (((dt.low - dy.close) / dy.close)*100).round(2).to_f
 	 				dy_cc = (((dt.close - dy.close) / dy.close)*100).round(2).to_f
+	 				dy_lco = (((dt.open - dy.close) / dy.close)*100).round(2).to_f
 	 				dt.update_attributes(:bs_signal => bs, :oh_diff => dt_oh, :ol_diff => dt_ol,
-	 					:oc_diff => dt_oc, :ch_diff => dy_ch, :cl_diff => dy_cl, :cc_diff => dy_cc)			
+	 					:oc_diff => dt_oc, :lco_diff => dy_lco,
+	 					:ch_diff => dy_ch, :cl_diff => dy_cl, :cc_diff => dy_cc)			
 				end
 			rescue Exception => e
 				file.syswrite (e.message)
@@ -75,7 +77,7 @@ class BseStocksDetail < ActiveRecord::Base
 		#data = CSV.read("/home/navpreet/Downloads/bhav_copy/bse_bhav_copy.csv")
 		data = CSV.read("/home/trantor/Downloads/bhav_copy/bse_bhav_copy.csv")
 		data.delete_at(0)
-		stocks = BseStock.where("vol_category >= 3")
+		stocks = BseStock.where("vol_category >= 2 and useless_stock = 1")
 		s_codes = stocks.collect(&:bse_code)		
 		date = Time.now.strftime("%Y-%m-%d")
 		file = File.new("error_files/Bse_imp_data", "w+")		

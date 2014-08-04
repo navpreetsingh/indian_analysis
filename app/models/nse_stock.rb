@@ -36,7 +36,14 @@ class NseStock < ActiveRecord::Base
 				elsif avg_price > 1000
 					pc = 4
 				end
-				stock.update_attributes(:vol_category => vc, :price_category => pc)
+				avg_turnover = data.where("date > '2014-07-11'").collect(&:turnover)
+				avg_turnover1 = data.where("date <= '2014-07-11'").collect(&:turnover)
+				avg_turnover = avg_turnover.sum / (100000 * avg_turnover.count)
+				avg_turnover1 = avg_turnover1.sum / avg_turnover1.count
+				avg_turnover = avg_turnover + avg_turnover1
+				
+				stock.update_attributes(:vol_category => vc, :price_category => pc, :useless_stock => 1) if avg_turnover > 10
+				stock.update_attributes(:vol_category => vc, :price_category => pc, :useless_stock => -1) if avg_turnover <= 10
 			end
 		end
 	end

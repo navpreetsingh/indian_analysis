@@ -1,3 +1,4 @@
+
 class BseStock < ActiveRecord::Base
 	has_many :bse_stocks_details, dependent: :destroy
 	has_many :bse_dumps, dependent: :destroy
@@ -39,8 +40,10 @@ class BseStock < ActiveRecord::Base
 					pc = 3
 				elsif avg_price > 1000
 					pc = 4
-				end				
-				stock.update_attributes(:vol_category => vc, :price_category => pc)
+				end		
+				avg_turnover = data.collect(&:total_turnover).sum / data.count
+				stock.update_attributes(:vol_category => vc, :price_category => pc, :useless_stock => 1) if avg_turnover > 1000000
+				stock.update_attributes(:vol_category => vc, :price_category => pc, :useless_stock => -1) if avg_turnover <= 1000000 or stock.bse_code > 600000
 			end
 		end
 	end	

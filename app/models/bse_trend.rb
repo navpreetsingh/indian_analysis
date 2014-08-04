@@ -5,7 +5,7 @@ class BseTrend < ActiveRecord::Base
 
 	def self.trend
 		BseTrend.destroy_all
-		ids = BseStock.where("vol_category >= 3")
+		ids = BseStock.where("vol_category >= 2 and useless_stock = 1")
 		file = File.new("error_files/Bse_Trend", "w+")
 		date = BseStocksDetail.uniq.pluck(:date).sort.last
 		#date = Date.today

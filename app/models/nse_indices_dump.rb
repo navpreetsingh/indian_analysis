@@ -5,25 +5,33 @@ class NseIndicesDump < ActiveRecord::Base
 	validates :date, uniqueness: { scope: :nse_indices_id}
 
 	def self.update_data
-		data = CSV.read("/home/trantor/Downloads/bhav_copy/nse_indices/Index.csv")
+		# data = CSV.read("/home/trantor/Downloads/bhav_copy/nse_indices/Index.csv")
+		data = CSV.read("/home/navpreet/Downloads/bhav_copy/nse_indices/Index.csv")
 		data.delete_at(0)
+		file = File.new("error_files/Nse_indices_data", "w+")
 		data.each do |d|
-			d = d[0].split("\t")
-			NseIndices.create(:indices_name => d[0])			
-			id = NseIndices.where("indices_name = ?", d[0]).first.id
-			nin = d[0].upcase.gsub(" ", "%20")
-			puts "http://www.nseindia.com/content/indices/histdata/#{nin}01-01-2014-31-07-2014.csv"
-			file = open("http://www.nseindia.com/content/indices/histdata/#{nin}01-01-2014-31-07-2014.csv")
-			indices_data = file.read	
-			indices_data = CSV.parse(indices_data)
-			indices_data.delete([])
-			indices_data.delete_at(0)
-			
-			indices_data.each do |dd|
-				NseIndicesDump.create(:nse_indices_id => id,
-					:date => Date.parse(dd[0]).to_s, :open => dd[1], 
-					:high => dd[2], :low => dd[3], :close => dd[4],
-					:volume => dd[5])
+			begin
+				d = d[0].split("\t")
+				NseIndices.create(:indices_name => d[0])			
+				id = NseIndices.where("indices_name = ?", d[0]).first.id
+				nin = d[0].upcase.gsub(" ", "%20")
+				#puts "http://www.nseindia.com/content/indices/histdata/#{nin}01-01-2014-31-07-2014.csv"
+				file = open("http://www.nseindia.com/content/indices/histdata/#{nin}01-01-2011-01-08-2014.csv")
+				indices_data = file.read	
+				indices_data = CSV.parse(indices_data)
+				indices_data.delete([])
+				indices_data.delete_at(0)
+				
+				indices_data.each do |dd|
+					NseIndicesDump.create(:nse_indices_id => id,
+						:date => Date.parse(dd[0]).to_s, :open => dd[1], 
+						:high => dd[2], :low => dd[3], :close => dd[4],
+						:volume => dd[5])
+				end
+			rescue Exception => e
+				file.syswrite (e.message)
+				file.syswrite ("\nIndices: #{nin}\n")				
+				
 			end
 		end
 	end

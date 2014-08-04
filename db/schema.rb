@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140730103525) do
+ActiveRecord::Schema.define(version: 20140803045446) do
 
   create_table "bse4_bs_strategies", force: true do |t|
     t.string   "stock_name",    null: false
@@ -313,7 +313,21 @@ ActiveRecord::Schema.define(version: 20140730103525) do
     t.float   "high"
     t.float   "low"
     t.float   "close"
+    t.integer "volume",         limit: 8
+  end
+
+  create_table "nse_month_details", force: true do |t|
+    t.integer "nse_stock_id"
+    t.date    "date"
+    t.float   "open"
+    t.float   "high"
+    t.float   "low"
+    t.float   "close"
     t.integer "volume"
+    t.integer "bs_signal"
+    t.float   "oh_diff"
+    t.float   "ol_diff"
+    t.float   "oc_diff"
   end
 
   create_table "nse_stocks", force: true do |t|
@@ -375,6 +389,34 @@ ActiveRecord::Schema.define(version: 20140730103525) do
     t.float    "avg_close"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "nse_week_details", force: true do |t|
+    t.integer "nse_stock_id"
+    t.date    "date"
+    t.float   "open"
+    t.float   "high"
+    t.float   "low"
+    t.float   "close"
+    t.integer "volume"
+    t.integer "bs_signal"
+    t.float   "oh_diff"
+    t.float   "ol_diff"
+    t.float   "oc_diff"
+  end
+
+  create_table "nse_year_details", force: true do |t|
+    t.integer "nse_stock_id"
+    t.integer "year"
+    t.float   "open"
+    t.float   "high"
+    t.float   "low"
+    t.float   "close"
+    t.integer "volume"
+    t.integer "bs_signal"
+    t.float   "oh_diff"
+    t.float   "ol_diff"
+    t.float   "oc_diff"
   end
 
   create_table "strategy_analyses", force: true do |t|
