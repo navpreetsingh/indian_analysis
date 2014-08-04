@@ -5,8 +5,8 @@ class NseIndicesDump < ActiveRecord::Base
 	validates :date, uniqueness: { scope: :nse_indices_id}
 
 	def self.update_data
-		# data = CSV.read("/home/trantor/Downloads/bhav_copy/nse_indices/Index.csv")
-		data = CSV.read("/home/navpreet/Downloads/bhav_copy/nse_indices/Index.csv")
+		data = CSV.read("/home/trantor/Downloads/bhav_copy/nse_indices/Index.csv")
+		#data = CSV.read("/home/navpreet/Downloads/bhav_copy/nse_indices/Index.csv")
 		data.delete_at(0)
 		file = File.new("error_files/Nse_indices_data", "w+")
 		data.each do |d|
@@ -16,7 +16,7 @@ class NseIndicesDump < ActiveRecord::Base
 				id = NseIndices.where("indices_name = ?", d[0]).first.id
 				nin = d[0].upcase.gsub(" ", "%20")
 				#puts "http://www.nseindia.com/content/indices/histdata/#{nin}01-01-2014-31-07-2014.csv"
-				file = open("http://www.nseindia.com/content/indices/histdata/#{nin}01-01-2011-01-08-2014.csv")
+				file = open("http://www.nseindia.com/content/indices/histdata/#{nin}01-01-2009-04-08-2014.csv")
 				indices_data = file.read	
 				indices_data = CSV.parse(indices_data)
 				indices_data.delete([])

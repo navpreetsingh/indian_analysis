@@ -2,7 +2,7 @@ class CreateNseWeekDetails < ActiveRecord::Migration
   def change
     create_table :nse_week_details do |t|
     	t.integer :nse_stock_id
-    	t.year :year
+    	t.string :date
     	t.float :open
     	t.float :high
     	t.float :low
@@ -12,6 +12,7 @@ class CreateNseWeekDetails < ActiveRecord::Migration
 	    t.float :oh_diff
 	    t.float :ol_diff
 	    t.float :oc_diff      
+      t.date :date1      
     end
   end
 end

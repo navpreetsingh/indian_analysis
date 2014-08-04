@@ -1,5 +1,6 @@
 require 'csv'
 require 'open-uri'
+
 class NseStocksDetail < ActiveRecord::Base
 	belongs_to :nse_stock
 	validates :date, uniqueness: { scope: :nse_stock_id}
