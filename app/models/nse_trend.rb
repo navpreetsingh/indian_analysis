@@ -7,7 +7,7 @@ class NseTrend < ActiveRecord::Base
 		# rake db:migrate:down VERSION=20140705140950
 		# rake db:migrate:down VERSION=20140705140950
 		file = File.new("error_files/Nse_Trend", "w+")
-		NseTrend.destroy_all
+		NseTrend.find_by_sql("TRUNCATE TABLE `nse_trends`")
 		ids = NseStock.where("vol_category >= 2 and useless_stock = 1")
 		date = NseStocksDetail.uniq.pluck(:date).sort.last
 		#date = Date.yesterday

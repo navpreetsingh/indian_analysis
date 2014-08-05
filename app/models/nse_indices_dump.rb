@@ -16,7 +16,7 @@ class NseIndicesDump < ActiveRecord::Base
 				id = NseIndices.where("indices_name = ?", d[0]).first.id
 				nin = d[0].upcase.gsub(" ", "%20")
 				#puts "http://www.nseindia.com/content/indices/histdata/#{nin}01-01-2014-31-07-2014.csv"
-				file = open("http://www.nseindia.com/content/indices/histdata/#{nin}01-01-2009-04-08-2014.csv")
+				file = open("http://www.nseindia.com/content/indices/histdata/#{nin}01-01-2012-04-08-2014.csv")
 				indices_data = file.read	
 				indices_data = CSV.parse(indices_data)
 				indices_data.delete([])

@@ -1,0 +1,16 @@
+undefined method `*' for nil:NilClass
+ Stock: GAL
+
+Data: [#<NseStocksDetail id: 1462316, nse_stock_id: 320, date: "2014-08-05", open: #<BigDecimal:a158e0c,'0.468E2',18(18)>, high: #<BigDecimal:abcc154,'0.477E2',18(18)>, low: #<BigDecimal:a15bee0,'0.465E2',18(18)>, close: #<BigDecimal:a15be54,'0.4685E2',18(18)>, volume: 11588, turnover: #<BigDecimal:a1587a4,'0.546911E6',9(18)>, bs_signal: 1, oh_diff: #<BigDecimal:a158434,'0.192E1',18(18)>, ol_diff: #<BigDecimal:a15822c,'-0.64E0',9(18)>, oc_diff: #<BigDecimal:a15818c,'0.11E0',9(18)>, lco_diff: #<BigDecimal:a159c6c,'0.0',9(18)>, ch_diff: #<BigDecimal:a159c08,'0.192E1',18(18)>, cl_diff: #<BigDecimal:a159af0,'-0.64E0',9(18)>, cc_diff: #<BigDecimal:a159a78,'0.11E0',9(18)>>, #<NseStocksDetail id: 1461515, nse_stock_id: 320, date: "2014-08-04", open: #<BigDecimal:a157728,'0.46E2',9(18)>, high: #<BigDecimal:abcc104,'0.4735E2',18(18)>, low: #<BigDecimal:a1585d8,'0.455E2',18(18)>, close: #<BigDecimal:a15bdf0,'0.468E2',18(18)>, volume: 33079, turnover: #<BigDecimal:a157228,'0.154607E7',9(18)>, bs_signal: 1, oh_diff: #<BigDecimal:a15705c,'0.293E1',18(18)>, ol_diff: #<BigDecimal:a156f80,'-0.109E1',18(18)>, oc_diff: #<BigDecimal:a156c10,'0.174E1',18(18)>, lco_diff: nil, ch_diff: nil, cl_diff: nil, cc_diff: nil>]
+
+
+
+
+undefined method `*' for nil:NilClass
+ Stock: KEMROCK
+
+Data: [#<NseStocksDetail id: 1462486, nse_stock_id: 560, date: "2014-08-05", open: #<BigDecimal:ac76500,'0.252E2',18(18)>, high: #<BigDecimal:ac85a8c,'0.252E2',18(18)>, low: #<BigDecimal:ac857d0,'0.2325E2',18(18)>, close: #<BigDecimal:ac8558c,'0.235E2',18(18)>, volume: 6402, turnover: #<BigDecimal:ac761a4,'0.15389E6',9(18)>, bs_signal: -1, oh_diff: #<BigDecimal:ac76078,'0.0',9(18)>, ol_diff: #<BigDecimal:ac75f74,'-0.774E1',18(18)>, oc_diff: #<BigDecimal:ac75e48,'-0.675E1',18(18)>, lco_diff: #<BigDecimal:ac77504,'0.37E1',18(18)>, ch_diff: #<BigDecimal:ac772ac,'0.37E1',18(18)>, cl_diff: #<BigDecimal:ac7720c,'-0.432E1',18(18)>, cc_diff: #<BigDecimal:ac77130,'-0.329E1',18(18)>>, #<NseStocksDetail id: 1461685, nse_stock_id: 560, date: "2014-08-04", open: #<BigDecimal:ac75614,'0.2255E2',18(18)>, high: #<BigDecimal:ac859ec,'0.248E2',18(18)>, low: #<BigDecimal:ac85758,'0.2255E2',18(18)>, close: #<BigDecimal:ac85564,'0.243E2',18(18)>, volume: 13016, turnover: #<BigDecimal:ac75240,'0.307172E6',9(18)>, bs_signal: 1, oh_diff: #<BigDecimal:ac75010,'0.998E1',18(18)>, ol_diff: #<BigDecimal:ac74c50,'0.0',9(18)>, oc_diff: #<BigDecimal:ac74b74,'0.776E1',18(18)>, lco_diff: nil, ch_diff: nil, cl_diff: nil, cc_diff: nil>]
+
+
+
+
