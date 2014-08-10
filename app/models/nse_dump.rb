@@ -6,8 +6,8 @@ class NseDump < ActiveRecord::Base
 	validates :date, uniqueness: { scope: :nse_stock_id}
 
 	def self.update_data
-		#data = CSV.read("/home/navpreet/Downloads/bhav_copy/nse_bhav_copy.csv")
-		data = CSV.read("/home/trantor/Downloads/bhav_copy/nse_bhav_copy.csv")
+		data = CSV.read("/home/navpreet/Downloads/bhav_copy/nse_bhav_copy.csv")
+		#data = CSV.read("/home/trantor/Downloads/bhav_copy/nse_bhav_copy.csv")
 		data.delete_at(0)
 		stocks = NseStock.all
 		s_names = stocks.collect(&:stock_name)
